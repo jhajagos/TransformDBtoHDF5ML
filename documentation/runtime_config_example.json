@@ -1,0 +1,19 @@
+{
+  "source_db_config": {
+    "connection_string": "sqlite:///./test/test_db.db3",
+    "limit": null,
+    "refresh_transactions_table": 1,
+    "batch_size": 10000
+  },
+  "json_file_config": {
+     "base_file_name": "transactions",
+     "data_directory": "./test/"
+  },
+  "mongo_db_config": {
+    "connection_string": "mongodb://localhost",
+    "database_name": "encounters",
+    "collection_name": "mapped_encounters",
+    "refresh_collection": true
+  },
+  "output_type": "json_file"
+}

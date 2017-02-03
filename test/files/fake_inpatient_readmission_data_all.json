@@ -1,0 +1,437 @@
+{
+    "10000": {
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "days_to_readmit": 30,
+                    "has_30_day_readmit": 2
+                }
+            }
+        },
+        "independent": {
+            "classes": {
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "20",
+                        "description": "serious serious problems"
+                    },
+                    {
+                        "code": "30",
+                        "description": "really extreme issues"
+                    }
+                ],
+                "discharge": {
+                    "admit_date": "2012-02-01",
+                    "age": 48,
+                    "discharge_date": "2014-03-01",
+                    "gender": "M"
+                },
+                "lab": {
+                    "BUN": [
+                        {
+                            "result_category": "high",
+                            "value": 9
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 5
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 6
+                        },
+                        {
+                            "result_category": "insignificant",
+                            "value": 0
+                        }
+                    ]
+                },
+                "pulse": [
+                    {
+                        "rate": 55,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 60,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 200,
+                        "result_category": "high"
+                    },
+                    {
+                        "rate": 0,
+                        "result_category": "NS"
+                    }
+                ]
+            }
+        }
+    },
+    "11555": {
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "days_to_readmit": 40,
+                    "has_30_day_readmit": 1
+                }
+            }
+        },
+        "independent": {
+            "classes": {
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "5",
+                        "description": "serious problems"
+                    },
+                    {
+                        "code": "4",
+                        "description": "more issues"
+                    }
+                ],
+                "discharge": {
+                    "admit_date": "2012-01-01",
+                    "age": 50,
+                    "discharge_date": "2014-01-01",
+                    "emergency": "Y",
+                    "gender": "M"
+                },
+                "lab": {
+                    "BUN": [
+                        {
+                            "result_category": "high",
+                            "value": 5
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 5
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 6
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 4
+                        }
+                    ]
+                },
+                "pulse": [
+                    {
+                        "rate": 55,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 60,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 200,
+                        "result_category": "high"
+                    },
+                    {
+                        "rate": 40,
+                        "result_category": "low"
+                    }
+                ]
+            }
+        }
+    },
+    "11777": {
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "days_to_readmit": 40,
+                    "has_30_day_readmit": 0
+                }
+            }
+        },
+        "independent": {
+            "classes": {
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "2",
+                        "description": "problems"
+                    }
+                ],
+                "discharge": {
+                    "age": 58,
+                    "emergency": "N",
+                    "gender": "F"
+                },
+                "lab": {
+                    "BUN": [
+                        {
+                            "result_category": "low",
+                            "value": 1
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 3
+                        },
+                        {
+                            "result_category": "normal",
+                            "value": 2
+                        },
+                        {
+                            "result_category": "normal",
+                            "value": 2
+                        }
+                    ],
+                    "a1c": [
+                        {
+                            "result_category": "normal",
+                            "value": 5
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 9
+                        }
+                    ]
+                },
+                "pulse": [
+                    {
+                        "rate": 110,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 105,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 120,
+                        "result_category": "normal"
+                    }
+                ]
+            }
+        }
+    },
+    "555": {
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "days_to_readmit": 40,
+                    "has_30_day_readmit": 1
+                }
+            }
+        },
+        "independent": {
+            "classes": {
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "5",
+                        "description": "serious problems"
+                    },
+                    {
+                        "code": "4",
+                        "description": "more issues"
+                    }
+                ],
+                "discharge": {
+                    "admit_date": "2012-01-01",
+                    "age": 50,
+                    "discharge_date": "2012-01-05",
+                    "gender": "M"
+                },
+                "lab": {
+                    "BUN": [
+                        {
+                            "day": 1,
+                            "result_category": "high",
+                            "value": 5
+                        },
+                        {
+                            "day": 1,
+                            "result_category": "high",
+                            "value": 5
+                        },
+                        {
+                            "day": 2,
+                            "result_category": "high",
+                            "value": 6
+                        },
+                        {
+                            "day": 5,
+                            "result_category": "high",
+                            "value": 4
+                        }
+                    ]
+                },
+                "pulse": [
+                    {
+                        "rate": 55,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 60,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 200,
+                        "result_category": "high"
+                    },
+                    {
+                        "rate": 40,
+                        "result_category": "low"
+                    }
+                ]
+            }
+        }
+    },
+    "777": {
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "days_to_readmit": 40,
+                    "has_30_day_readmit": 0
+                }
+            }
+        },
+        "independent": {
+            "classes": {
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "2",
+                        "description": "problems"
+                    }
+                ],
+                "discharge": {
+                    "age": 58,
+                    "gender": "F"
+                },
+                "lab": {
+                    "BUN": [
+                        {
+                            "day": 2,
+                            "result_category": "low",
+                            "value": 1
+                        },
+                        {
+                            "day": 3,
+                            "result_category": "high",
+                            "value": 3
+                        },
+                        {
+                            "day": 4,
+                            "result_category": "normal",
+                            "value": 2
+                        },
+                        {
+                            "day": 4,
+                            "result_category": "normal",
+                            "value": 2
+                        }
+                    ],
+                    "Troponin": [
+                        {
+                            "day": 1,
+                            "result_category": "extreme",
+                            "value": 0.1
+                        }
+                    ]
+                },
+                "pulse": [
+                    {
+                        "rate": 110,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 105,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 120,
+                        "result_category": "normal"
+                    }
+                ]
+            }
+        }
+    },
+    "7777": {
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "days_to_readmit": 40,
+                    "has_30_day_readmit": 0
+                }
+            }
+        },
+        "independent": {
+            "classes": {
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "2",
+                        "description": "problems"
+                    }
+                ],
+                "discharge": {
+                    "age": 60,
+                    "gender": "U"
+                },
+                "lab": {
+                    "BUN": [
+                        {
+                            "result_category": "low",
+                            "value": 1
+                        },
+                        {
+                            "result_category": "high",
+                            "value": 3
+                        },
+                        {
+                            "result_category": "normal",
+                            "value": 2
+                        },
+                        {
+                            "result_category": "normal",
+                            "value": 2
+                        }
+                    ],
+                    "Troponin": [
+                        {
+                            "result_category": "super extreme",
+                            "value": 0.9
+                        }
+                    ]
+                },
+                "pulse": [
+                    {
+                        "rate": 110,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 105,
+                        "result_category": "normal"
+                    },
+                    {
+                        "rate": 120,
+                        "result_category": "normal"
+                    }
+                ]
+            }
+        }
+    }
+}

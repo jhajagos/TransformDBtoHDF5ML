@@ -1,0 +1,122 @@
+{
+    "11555" : {
+        "independent": {
+            "classes" : {
+                "lab": {
+                    "BUN": [
+                        {
+                            "value": 5,
+                            "result_category": "high"
+                        },
+                        {
+                            "value": 5,
+                            "result_category": "high"
+                        },
+                        {
+                            "value": 6,
+                            "result_category": "high"
+                        },
+                        {
+                            "value": 4,
+                            "result_category": "high"
+                        }
+                    ]
+                },
+                "discharge":
+                {
+                    "age": 50,
+                    "gender": "M",
+                    "emergency": "Y",
+                    "admit_date": "2012-01-01",
+                    "discharge_date": "2014-01-01"
+                },
+                "diagnosis":
+                [
+                    {"code": "1", "description": "issues"},
+                    {"code": "5", "description": "serious problems"},
+                    {"code": "4", "description": "more issues"}
+                ],
+                "pulse":
+                    [
+                        {"rate": 55,  "result_category": "normal"},
+                        {"rate": 60,  "result_category": "normal"},
+                        {"rate": 200, "result_category": "high"},
+                        {"rate": 40,  "result_category": "low"}
+                    ]
+            }
+        },
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "has_30_day_readmit": 1,
+                    "days_to_readmit": 40
+                }
+            }
+
+        }
+    },
+    "11777" : {
+        "independent": {
+            "classes": {
+                "lab": {
+                    "BUN": [
+                        {
+                            "value": 1,
+                            "result_category": "low"
+                        },
+                        {
+                            "value": 3,
+                            "result_category": "high"
+                        },
+                        {
+                            "value": 2,
+                            "result_category": "normal"
+                        },
+                        {
+                            "value": 2,
+                            "result_category": "normal"
+                        }
+                    ],
+                    "a1c": [
+                        {
+                            "value": 5,
+                            "result_category": "normal"
+                        },
+                        {
+                            "value": 9,
+                            "result_category": "high"
+                        }
+                    ]
+                },
+                "discharge": {
+                    "age": 58,
+                    "gender": "F",
+                    "emergency": "N"
+                },
+                "diagnosis": [
+                    {
+                        "code": "1",
+                        "description": "issues"
+                    },
+                    {
+                        "code": "2",
+                        "description": "problems"
+                    }
+                ],
+                "pulse": [
+                    {"rate": 110, "result_category": "normal"},
+                    {"rate": 105, "result_category": "normal"},
+                    {"rate": 120, "result_category": "normal"}
+                ]
+            }
+        },
+        "dependent": {
+            "classes": {
+                "discharge": {
+                    "has_30_day_readmit": 0,
+                    "days_to_readmit": 40
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,147 @@
+ [
+    {"path": ["independent", "classes", "discharge"],
+     "variables": [
+         {"cell_value": "age",
+          "type": "integer"
+         },
+         {
+          "cell_value": "gender",
+          "type": "categorical"
+         },
+         {
+          "cell_value": "emergency",
+          "type": "categorical"
+         },
+         {
+           "cell_value": "admit_date",
+           "type": "datetime"
+         },
+         {
+           "cell_value": "discharge_date",
+           "type": "datetime"
+         }
+     ],
+     "type": "variables"
+    },
+    {
+        "path": ["independent", "classes", "diagnosis"],
+        "type": "categorical_list",
+        "process": "list_position",
+        "field": "code",
+        "name": "discharge_diagnosis",
+        "label": "code",
+        "cell_value": "code",
+        "description": "description"
+    },
+    {
+        "path": ["independent", "classes", "diagnosis"],
+        "export_path": ["independent", "classes", "diagnosis2"],
+        "type": "categorical_list",
+        "process": "list_position",
+        "field": "code",
+        "name": "discharge_diagnosis",
+        "label": "code",
+        "cell_value": "code",
+        "description": "description"
+    },
+    {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "last_item"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "last_item",
+                "type": "numeric_list",
+                "cell_value": "value"
+            }
+    },
+    {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "count"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "count",
+                "type": "numeric_list",
+                "cell_value": "value"
+            }
+    },
+      {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "category"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "count_categories",
+                "type": "categorical_list",
+                "cell_value": "result_category"
+            }
+    },
+    {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "day", "category"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "count_categories",
+                "type": "categorical_list",
+                "cell_value": "result_category",
+                "filter": {"field": "day", "value": 1}
+            }
+    },
+     {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "first_day"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "first_item",
+                "type": "numeric_list",
+                "cell_value": "value",
+                "filter": {"field": "day", "value": 1}
+            }
+    },
+     {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "first"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "first_item",
+                "type": "numeric_list",
+                "cell_value": "value"
+            }
+    },
+    {
+        "path": ["dependent", "classes", "discharge"],
+        "variables": [
+            {
+                "cell_value": "has_30_day_readmit",
+                "type": "categorical"
+            },
+            {
+                "cell_value": "days_to_readmit",
+                "type": "integer"
+            }
+        ],
+        "type": "variables"
+    },
+    {
+        "path": ["independent", "classes", "pulse"],
+        "variables": [
+            {
+                "process": "median",
+                "type": "numeric_list",
+                "cell_value": "rate",
+                "name": "pulse"
+            }],
+        "type": "variables"
+    }
+
+]

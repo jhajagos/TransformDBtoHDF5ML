@@ -1,0 +1,40 @@
+{
+    "main_transactions":
+        {"table_name": "encounters",
+             "fields_to_order_by": ["patient_id", "stay_id", "Discharge Date"],
+             "where_criteria": null,
+             "transaction_id": "encounter_id",
+             "schema": null
+        },
+    "mappings":
+    [
+        {
+            "name": "discharge",
+            "path": ["independent", "classes"],
+            "table_name": "encounters",
+            "type": "one-to-one",
+            "fields_to_include":  ["encounter_id",  "medical_record_number",  "drg",
+              "patient_gender", "patient_age", "day_from_start"]
+        },
+        {
+            "name": "discharge_dx",
+            "path": ["independent", "classes"],
+            "table_name": "diagnoses",
+            "fields_to_order_by": ["encounter_id", "sequence_id"],
+            "type": "one-to-many",
+            "fields_to_include": ["encounter_id", "sequence_id", "diagnosis_description", "diagnosis_code", "ccs_code", "ccs_description"]
+
+        },
+        {
+            "name": "lab",
+            "path": ["independent", "classes"],
+            "table_name": "laboratory_tests",
+            "fields_to_order_by": ["encounter_id", "test_name", "minutes_since_midnight"],
+            "type": "one-to-many-class",
+            "fields_to_include": ["encounter_id", "test_name", "code", "numeric_value","non_numeric_value",
+              "test_status", "minutes_since_midnight"],
+            "group_by_field": "test_name"
+        }
+
+    ]
+}

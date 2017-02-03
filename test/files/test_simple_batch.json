@@ -1,0 +1,14 @@
+[
+  {
+  "batch_id": 1,
+  "data_json_file": "./files/fake_inpatient_readmission_data_1.json"
+  },
+  {
+  "batch_id": 2,
+  "data_json_file": "./files/fake_inpatient_readmission_data_2.json"
+  },
+  {
+  "batch_id": 3,
+  "data_json_file": "./files/fake_inpatient_readmission_data_3.json"
+  }
+]

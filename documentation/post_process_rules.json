@@ -1,0 +1,32 @@
+[
+   {
+      "path": "/independent/classes/discharge_dx/",
+      "write_path": "/independent/classes/discharge_dx_present/",
+      "rule": "zero_or_one"
+   },
+   {
+      "path": "/independent/classes/admit_dx/",
+      "write_path": "/independent/classes/admit_dx_present/",
+      "rule": "zero_or_one"
+   },
+   {
+      "path": "/independent/classes/clinical_event/categories/",
+      "write_path": "/independent/classes/clinical_event/categories_normalized/",
+      "rule": "normalize_category_count"
+   },
+   {
+      "path": "/independent/classes/lab/categories/",
+      "write_path": "/independent/classes/lab/categories_normalized/",
+      "rule": "normalize_category_count"
+   },
+   {
+      "path": "/independent/classes/procedure/",
+      "write_path": "/independent/classes/procedure_present/",
+      "rule": "zero_or_one"
+   },
+   {
+      "path": "/independent/classes/medication/count/",
+      "write_path": "/independent/classes/medication_present/",
+      "rule": "zero_or_one"
+   }
+]
