@@ -12,7 +12,7 @@ class RunHDF5Mapping(unittest.TestCase):
     def setUp(self):
 
         # Build single file
-        directory = "./test/"
+        directory = "./files/"
         data_json_files = ["fake_inpatient_readmission_data_1.json", "fake_inpatient_readmission_data_2.json",
                            "fake_inpatient_readmission_data_3.json"]
 
@@ -33,9 +33,8 @@ class RunHDF5Mapping(unittest.TestCase):
 
     def test_filter_and_first_set(self):
 
-        directory = "./test/"
-        bhm.main("filter_test", "./test/test_single_file_batch.json", "./test/configuration_to_build_matrix.json")
-        f5 = h5py.File("./test/filter_test_1.hdf5",'r')
+        bhm.main("filter_test", "./files/test_single_file_batch.json", "./files/configuration_to_build_matrix.json")
+        f5 = h5py.File("./files/filter_test_1.hdf5",'r')
 
         lab_first = f5["/independent/classes/lab/first/core_array"][...]
         lab_first_day = f5["/independent/classes/lab/first_day/core_array"][...]
@@ -46,11 +45,11 @@ class RunHDF5Mapping(unittest.TestCase):
 
     def test_mapping_single_file(self):
 
-        if os.path.exists("./test/transaction_test_1.hdf5"):
-            os.remove("./test/transaction_test_1.hdf5")
+        if os.path.exists("./files/transaction_test_1.hdf5"):
+            os.remove("./files/transaction_test_1.hdf5")
 
-        bhm.main("transaction_test", "./test/test_single_file_batch.json", "./test/configuration_to_build_matrix.json")
-        f5 = h5py.File("./test/transaction_test_1.hdf5",'r')
+        bhm.main("transaction_test", "./files/test_single_file_batch.json", "./files/configuration_to_build_matrix.json")
+        f5 = h5py.File("./files/transaction_test_1.hdf5",'r')
         dca = f5["/independent/classes/discharge/core_array"][...]
         self.assertEquals(dca.shape, (2, 5))
 
@@ -80,21 +79,21 @@ class RunHDF5Mapping(unittest.TestCase):
 
     def test_mapping_single_compressed_file(self):
 
-        if os.path.exists("./test/transaction_test_1.hdf5"):
-            os.remove("./test/transaction_test_1.hdf5")
+        if os.path.exists("./files/transaction_test_1.hdf5"):
+            os.remove("./files/transaction_test_1.hdf5")
 
-        bhm.main("transaction_test", "./test/test_all_file_batch_gz.json", "./test/configuration_to_build_matrix.json")
+        bhm.main("transaction_test", "./files/test_all_file_batch_gz.json", "./files/configuration_to_build_matrix.json")
 
     def test_mapping_split_file(self):
 
-        bhm.main("transaction_test_split", "./test/test_simple_batch.json", "./test/configuration_to_build_matrix.json")
-        bhm.main("transaction_test_combined", "./test/test_all_file_batch.json", "./test/configuration_to_build_matrix.json")
+        bhm.main("transaction_test_split", "./files/test_simple_batch.json", "./files/configuration_to_build_matrix.json")
+        bhm.main("transaction_test_combined", "./files/test_all_file_batch.json", "./files/configuration_to_build_matrix.json")
 
-        f5s1 = h5py.File("./test/transaction_test_split_1.hdf5", 'r')
-        f5s2 = h5py.File("./test/transaction_test_split_2.hdf5", 'r')
-        f5s3 = h5py.File("./test/transaction_test_split_3.hdf5", 'r')
+        f5s1 = h5py.File("./files/transaction_test_split_1.hdf5", 'r')
+        f5s2 = h5py.File("./files/transaction_test_split_2.hdf5", 'r')
+        f5s3 = h5py.File("./files/transaction_test_split_3.hdf5", 'r')
 
-        f5c = h5py.File("./test/transaction_test_combined_1.hdf5", 'r')
+        f5c = h5py.File("./files/transaction_test_combined_1.hdf5", 'r')
 
         lab_category_count_1 = f5s1["/independent/classes/lab/category/core_array"][...]
         lab_category_count_2 = f5s2["/independent/classes/lab/category/core_array"][...]
@@ -109,7 +108,7 @@ class RunHDF5Mapping(unittest.TestCase):
         self.assertEquals(np.sum(lab_category_count_c), np.sum(lab_category_count_cs))
 
         # Read the combined file
-        f5ca = h5py.File("./test/transaction_test_split_combined.hdf5", "r")
+        f5ca = h5py.File("./files/transaction_test_split_combined.hdf5", "r")
         lab_category_count_ca = f5ca["/independent/classes/lab/category/core_array"][...]
 
         self.assertEqual(lab_category_count_c.shape, lab_category_count_ca.shape)

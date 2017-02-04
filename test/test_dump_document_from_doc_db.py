@@ -5,12 +5,12 @@ import dump_documents_from_doc_db
 import os
 import pymongo
 
+
 class TestDumpJSON(unittest.TestCase):
 
     def setUp(self):
 
-
-        with open("./test/runtime_config_test.json", "r") as f:
+        with open("./files/runtime_config_test.json", "r") as f:
             test_load = json.load(f)
             pprint.pprint(test_load)
 
@@ -26,7 +26,7 @@ class TestDumpJSON(unittest.TestCase):
         collection_name = "load_document"
         connection_string = test_load["mongo_db_config"]["connection_string"]
 
-        directory = "./test/"
+        directory = "./files/"
         data_json_files = ["fake_inpatient_readmission_data_1.json", "fake_inpatient_readmission_data_2.json",
                            "fake_inpatient_readmission_data_3.json"]
 
@@ -46,7 +46,7 @@ class TestDumpJSON(unittest.TestCase):
 
     def test_extract(self):
 
-        batches_dict_1 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "F"}, "./test/",
+        batches_dict_1 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "F"}, "./files/",
                                                          "test_dump_docs_1",
                                                          self.test_config["mongo_db_config"])
 
@@ -54,7 +54,7 @@ class TestDumpJSON(unittest.TestCase):
             data_dict_1 = json.load(f)
             self.assertEquals(2, len(data_dict_1))
 
-        batches_dict_2 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "M"}, "./test/",
+        batches_dict_2 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "M"}, "./files/",
                                                            "test_dump_docs_2",
                                                            self.test_config["mongo_db_config"])
 
