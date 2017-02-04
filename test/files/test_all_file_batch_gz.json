@@ -1,0 +1,6 @@
+[
+    {
+        "batch_id": 1,
+        "data_json_file": "./files/fake_inpatient_readmission_data_all.json.gz"
+    }
+]
