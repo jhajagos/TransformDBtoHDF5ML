@@ -4,6 +4,7 @@ import csv
 from utility_prediction import get_all_paths
 import sys
 
+
 def main(hdf5_file_name, paths=None):
 
     hf5p = h5py.File(hdf5_file_name, "r")
