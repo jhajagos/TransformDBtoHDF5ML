@@ -52,7 +52,5 @@ def main(csv_file_name, criteria_field="to_include"):
         with open(json_file_name, "wb") as fw:
             json.dump(path_fields_list, fw, sort_keys=True, indent=4, separators=(',', ': '))
 
-
 if __name__ == "__main__":
     main(sys.argv[1])
-    #main("Z:\\healthfacts_inpatient_678_mapped_combined.hdf5.summary.fields.csv")

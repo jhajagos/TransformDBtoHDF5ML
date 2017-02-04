@@ -3,8 +3,10 @@ import utility_prediction as upx
 import csv
 import h5py
 import numpy as np
+import sys
 
-def main(starting_directory="X:\\healthfacts\\20160808\\"):
+
+def main(starting_directory):
 
     file_summary_csv = os.path.join(starting_directory, "hdf5_files_summary.csv")
 
@@ -39,9 +41,8 @@ def main(starting_directory="X:\\healthfacts\\20160808\\"):
                                print(row_to_write)
                                csv_writer.writerow(row_to_write)
 
-
                 #print(ext_split, file_name)
                 #upx.get_all_paths()
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])

@@ -32,10 +32,8 @@ def main(file_name):
             csv_writer.writerow(fields)
 
             core_array_rows = f5[core_array_paths[i]].shape[0]
-            #print(core_array_rows)
-            #exit()
-            #core_array_rows = 1000
-            for j in range(core_array_rows):#range(core_array_shape[0]):
+
+            for j in range(core_array_rows):
                 result = {}
                 core_array_row = f5[core_array_paths[i]][j, :]
                 for k in range(len(column_annotation_list)):

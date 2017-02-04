@@ -9,7 +9,6 @@ import sys
 import json
 import os
 
-
 def main(json_dict_file_name, n_samples):
 
     print("Reading '%s'" % os.path.abspath(json_dict_file_name))

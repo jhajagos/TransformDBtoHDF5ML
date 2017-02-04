@@ -7,6 +7,8 @@
 import numpy as np
 import gzip
 import json
+import h5py
+
 
 def data_dict_load(data_dict_json_file_name):
 
@@ -201,3 +203,62 @@ def find_column_indices(column_annotations, items_to_find):
         filter_indexes += [restrictive_indices[filter_index[0]]]
 
     return filter_indexes[-1], column_annotations[:, filter_indexes[-1]]
+
+
+def main_subset(hdf5_file_name, hdf5_file_name_to_write_to, queries_to_select_list=None, columns_to_include_list=None,
+                compact_columns=None):
+
+    fp5 = h5py.File(hdf5_file_name, "r")
+
+    if columns_to_include_list:
+        column_path_dict = find_multiple_column_indices_hdf5(fp5, columns_to_include_list)
+    else:
+        column_path_dict = None
+
+    if queries_to_select_list is not None:
+        row_array = query_rows_hdf5(fp5, queries_to_select_list)
+        print(row_array)
+    else:
+        for path in column_path_dict:
+            n_rows = fp5[path + "/core_array/"][:, 0].shape[0]
+            break
+
+        row_array = (np.arange(0, n_rows),)
+
+    wfp5 = h5py.File(hdf5_file_name_to_write_to, "w")
+
+    if column_path_dict is not None:
+
+        for path in column_path_dict:
+
+            core_array_path = "/".join(path.split("/") + ["core_array"])
+            column_annotations_path = "/".join(path.split("/") + ["column_annotations"])
+
+            indices, annotations = column_path_dict[path]
+            column_annotations_ds = wfp5.create_dataset(column_annotations_path, shape=annotations.shape,
+                                                        dtype=annotations.dtype, compression="gzip")
+            column_annotations_ds[...] = annotations
+            n_columns = annotations.shape[1]
+            n_rows = row_array[0].shape[0]
+
+            source_data_set = fp5[core_array_path]
+            core_array_ds = wfp5.create_dataset(core_array_path, dtype=source_data_set.dtype,
+                                                shape=(n_rows, n_columns), compression="gzip")
+
+            full_column_core_array = fp5[core_array_path][:, indices]
+            print(path)
+            if len(full_column_core_array.shape) > 1:
+                subset_full_column_core_array = full_column_core_array[row_array[0], :]
+                core_array_ds[...] = subset_full_column_core_array
+            else:
+                subset_full_column_core_array = full_column_core_array[row_array[0]]
+                core_array_ds[...] = np.array([subset_full_column_core_array]).transpose()
+
+    else:
+        all_paths = get_all_paths(fp5["/"])
+        for path in all_paths:
+            if "core_array" in path.split("/"):
+                core_array_ds = create_dataset_with_new_number_of_rows(fp5, wfp5, path, row_array[0].shape[0])
+                core_array_ds[...] = fp5[path][row_array[0], :]
+            else:
+                copy_data_set(fp5, wfp5, path, compression="gzip")

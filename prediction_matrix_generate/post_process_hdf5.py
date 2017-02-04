@@ -130,7 +130,3 @@ if __name__ == "__main__":
             rules = json.load(f)
 
     main(hdf5_file, rules)
-
-
-
-
