@@ -1,4 +1,3 @@
-import sys
 from prediction_matrix_generate.document_hdf5 import main
 import argparse
 

@@ -41,8 +41,5 @@ def main(starting_directory):
                                print(row_to_write)
                                csv_writer.writerow(row_to_write)
 
-                #print(ext_split, file_name)
-                #upx.get_all_paths()
-
 if __name__ == "__main__":
     main(sys.argv[1])

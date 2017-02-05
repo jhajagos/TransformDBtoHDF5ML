@@ -3,7 +3,7 @@ This program extracts a collection from a MongoDB instance and formats in a way 
 pipeline works.
 """
 
-from prediction_matrix_generate.document import write_document_from_main as main
+from prediction_matrix_generate.document import write_document_from_main
 import json
 import pprint
 import sys
@@ -31,5 +31,5 @@ if __name__ == "__main__":
     else:
         batch_size = 5000
 
-    main(query_to_run, base_directory, base_name, runtime_config["mongo_db_config"],
+    write_document_from_main(query_to_run, base_directory, base_name, runtime_config["mongo_db_config"],
          size_of_batches=batch_size, overwritten_collection_name=collection_name)
