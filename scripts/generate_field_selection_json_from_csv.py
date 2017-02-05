@@ -64,6 +64,6 @@ if __name__ == "__main__":
                               type=argparse.FileType("r"))
     argparse_obj.add_argument("-c", "--column_name", dest="column_name", default="to_include",
                               help="Optional field to use for field selection")
-    arg_obj = argparse_obj.parse_args()
 
+    arg_obj = argparse_obj.parse_args()
     main(arg_obj.csv_filename, arg_obj.column_name)
