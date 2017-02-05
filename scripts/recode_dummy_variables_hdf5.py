@@ -2,6 +2,7 @@ import h5py
 import prediction_matrix_generate.utility_functions as upx
 import numpy as np
 import csv
+import argparse
 
 
 def main(file_name):
@@ -82,4 +83,8 @@ def main(file_name):
 
 
 if __name__ == "__main__":
-    main("Z:/sbm_microbio_mapped_combined.hdf5")
+    argparse_obj = argparse.ArgumentParser()
+    argparse_obj.add_argument("-f", "--hdf5_filename", dest="hdf5_filename")
+
+    arg_obj = argparse_obj.parse_args()
+    main(arg_obj.hdf5_filename)

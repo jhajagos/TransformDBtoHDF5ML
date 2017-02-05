@@ -6,12 +6,13 @@ from prediction_matrix_generate.utility_functions import get_all_paths
 import csv
 import h5py
 import numpy as np
-import sys
+import argparse
+
 #TODO: Add path list
 
 
-def main(hdf5_file_name, csv_file_name=None, threshold_value_to_include=0.01):
-    fp5 = h5py.File(hdf5_file_name)
+def main(hdf5_filename, csv_file_name=None, threshold_value_to_include=0.01):
+    fp5 = h5py.File(hdf5_filename)
 
     paths = get_all_paths(fp5["/"])
 
@@ -21,7 +22,7 @@ def main(hdf5_file_name, csv_file_name=None, threshold_value_to_include=0.01):
     stripped_paths = ["/".join(sp) for sp in stripped_split_paths]
 
     if csv_file_name is None:
-        csv_file_name = hdf5_file_name + ".summary.csv"
+        csv_file_name = hdf5_filename + ".summary.csv"
 
         with open(csv_file_name, "wb") as fw:
             csv_writer = csv.writer(fw)
@@ -53,10 +54,12 @@ def main(hdf5_file_name, csv_file_name=None, threshold_value_to_include=0.01):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        main(sys.argv[1])
-    elif len(sys.argv[3]) == 3:
-        main(sys.argv[1], float(sys.argv[2]))
+    argparse_obj = argparse.ArgumentParser()
 
-    else:
-        print("Usage: python summary_quick_hdf5.py  data_file.hdf5  0.01")
+    argparse_obj.add_argument("-f", "--hdf5_filename", dest="hdf5_filename", help="HDF5 file to summarize")
+    argparse_obj.add_argument("-m", "--mark_frequency_by_fraction", dest="threshold_value_to_include", default=0.01, type=float,
+                              help="Mark records that occur at a fraction of at least between 0 and 1"
+                             )
+
+    arg_obj = argparse_obj.parse_args()
+    main(hdf5_filename=arg_obj.hdf5_filename, threshold_value_to_include=arg_obj.threshold_value_to_include)

@@ -2,7 +2,7 @@
 import h5py
 import csv
 from prediction_matrix_generate.utility_functions import get_all_paths
-import sys
+import argparse
 
 
 def main(hdf5_file_name, paths=None):
@@ -58,6 +58,8 @@ def main(hdf5_file_name, paths=None):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        print("Usage: python simple_hdf5_export_to_csv.py file_to_export.hdf5")
-    main(sys.argv[1])
+    argparse_obj = argparse.ArgumentParser()
+    argparse_obj.add_argument("-f", "--hdf5_filename", dest="hdf5_filename")
+
+    arg_obj = argparse_obj.parse_args()
+    main(arg_obj.hdf5_filename)

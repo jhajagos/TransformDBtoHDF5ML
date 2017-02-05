@@ -4,7 +4,8 @@ import argparse
 
 
 def main(csv_file_name, criteria_field="to_include"):
-    """Generate a JSON file that specifies which fields to filter from an HDF5 file
+    """
+        Generate a JSON file that specifies which fields to filter from an HDF5 file
         container. Field selection is based CSV on which fields are specified by a column
         "to_include" (user settable) when it equals 1. This can be used by the python program
         compact_subset_hdf5.py to select columns.
