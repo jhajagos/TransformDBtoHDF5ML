@@ -1,9 +1,14 @@
 import csv
 import json
-import sys
+import argparse
 
 
 def main(csv_file_name, criteria_field="to_include"):
+    """Generate a JSON file that specifies which fields to filter from an HDF5 file
+        container. Field selection is based CSV on which fields are specified by a column
+        "to_include" (user settable) when it equals 1. This can be used by the python program
+        compact_subset_hdf5.py to select columns.
+    """
 
     path_field_selection = {}
     path_field_order = []
@@ -53,4 +58,12 @@ def main(csv_file_name, criteria_field="to_include"):
             json.dump(path_fields_list, fw, sort_keys=True, indent=4, separators=(',', ': '))
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+
+    argparse_obj = argparse.ArgumentParser()
+    argparse_obj.add_argument("-f", "--csv_filename", dest="csv_filename", help="CSV filename to read to determine which fields to filter",
+                              type=argparse.FileType("r"))
+    argparse_obj.add_argument("-c", "--column_name", dest="column_name", default="to_include",
+                              help="Optional field to use for field selection")
+    arg_obj = argparse_obj.parse_args()
+
+    main(arg_obj.csv_filename, arg_obj.column_name)

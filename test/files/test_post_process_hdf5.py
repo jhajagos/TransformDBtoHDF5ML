@@ -1,8 +1,10 @@
-import unittest
-import h5py
 import os
+import unittest
+
+import h5py
 import numpy as np
-import post_process_hdf5 as pp
+
+from scripts import post_process_hdf5 as pp
 
 
 class TestNormalizeCounts(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 import h5py
-from utility_prediction import *
+from utility_functions import *
 
 
 class TestUtilityFunctions(unittest.TestCase):

@@ -1,6 +1,5 @@
 import h5py
-import sys
-import utility_prediction as upx
+import utility_functions as upx
 import numpy as np
 import csv
 
@@ -9,7 +8,7 @@ def main(file_name):
     f5 = h5py.File(file_name, "r")
     all_paths = upx.get_all_paths(f5["./"])
 
-    column_annotation_paths = [p for p in all_paths if p[ -1 * len("/column_annotations"):] == "/column_annotations"]
+    column_annotation_paths = [p for p in all_paths if p[-1 * len("/column_annotations"):] == "/column_annotations"]
     core_array_paths = [c for c in all_paths if c[ -1 * len("/core_array"):] == "/core_array"]
     i = 0
 

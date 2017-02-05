@@ -1,9 +1,11 @@
-import unittest
 import json
-import pprint
-import dump_documents_from_doc_db
 import os
+import pprint
+import unittest
+
 import pymongo
+
+from scripts import dump_documents_from_doc_db
 
 
 class TestDumpJSON(unittest.TestCase):
@@ -56,7 +58,7 @@ class TestDumpJSON(unittest.TestCase):
 
         batches_dict_2 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "M"}, "./files/",
                                                            "test_dump_docs_2",
-                                                           self.test_config["mongo_db_config"])
+                                                         self.test_config["mongo_db_config"])
 
         with open(batches_dict_2[0]["data_json_file"], "r") as f:
             data_dict_2 = json.load(f)

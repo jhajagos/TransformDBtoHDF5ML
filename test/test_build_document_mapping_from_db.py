@@ -1,11 +1,13 @@
 __author__ = 'jhajagos'
 
-import unittest
-import sqlalchemy as sa
-import os
-import json
-import build_document_mapping_from_db
 import gzip
+import json
+import os
+import unittest
+
+import sqlalchemy as sa
+import db_document
+
 
 schema = """
 create table encounters (
@@ -94,7 +96,7 @@ class TestDBMappingJSON(unittest.TestCase):
 
     def test_json_mapping_split_file(self):
 
-        mapping_jsons, order_json = build_document_mapping_from_db.main_json("./files/test_mapping_document.json",
+        mapping_jsons, order_json = db_document.main_json("./files/test_mapping_document.json",
                                                                              "./files/runtime_config_test_split.json")
 
         mapping_json_one = mapping_jsons[0]
@@ -119,7 +121,7 @@ class TestDBMappingJSON(unittest.TestCase):
 
     def test_json_mapping_one_file(self):
 
-        mapping_jsons, order_json = build_document_mapping_from_db.main_json("./files/test_mapping_document.json", "./files/runtime_config_test.json")
+        mapping_jsons, order_json = db_document.main_json("./files/test_mapping_document.json", "./files/runtime_config_test.json")
 
         mapping_json_one = mapping_jsons[0]
 
@@ -132,8 +134,8 @@ class TestDBMappingJSON(unittest.TestCase):
                 self.assertTrue(key in mapping_dict.keys())
 
     def test_json_mapping_one_file_with_ujson_and_compression(self):
-        mapping_jsons, order_json = build_document_mapping_from_db.main_json("./files/test_mapping_document.json",
-                                                                             "./files/runtime_config_test_gz_ujson.json")
+        mapping_jsons, order_json = db_document.main_json("./files/test_mapping_document.json",
+                                                          "./files/runtime_config_test_gz_ujson.json")
 
         mapping_json_one = mapping_jsons[0]
         with gzip.open(mapping_json_one, "rb") as f:

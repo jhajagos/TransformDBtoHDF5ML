@@ -2,13 +2,13 @@
 non zero elements, the fraction that are non-zero
 """
 
-from utility_prediction import get_all_paths
+from utility_functions import get_all_paths
 import csv
 import h5py
 import numpy as np
 import sys
-
 #TODO: Add path list
+
 
 def main(hdf5_file_name, csv_file_name=None, threshold_value_to_include=0.01):
     fp5 = h5py.File(hdf5_file_name)

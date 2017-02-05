@@ -7,8 +7,6 @@ Practical post processing for example creating normalized values
 # Create a new dataset but open the file with the 'r+'
 
 import h5py
-import json
-import sys
 import numpy as np
 
 
@@ -118,15 +116,3 @@ def main(hdf5_file, rules, chunks=5000, compression="gzip"):
 
         print("Writing to '%(write_path)s'" % rule)
 
-if __name__ == "__main__":
-
-    if len(sys.argv) == 1:
-        print("""Usage: python post_process_hdf5.py data.hdf5 rules.json""")
-    else:
-        hdf5_file = sys.argv[1]
-        rules_files = sys.argv[2]
-
-        with open(rules_files, "r") as f:
-            rules = json.load(f)
-
-    main(hdf5_file, rules)

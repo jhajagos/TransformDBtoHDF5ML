@@ -1,24 +1,20 @@
-"""
-This program extracts a collection from a MongoDB instance and formats in a way the
-pipeline works.
-"""
-
 try:
     import ujson
 except ImportError:
     import json as ujson
 
+from utility_functions import data_dict_load
 import pymongo
 import os
 import json
-import sys
 import shutil
 import gzip
-import pprint
 
 
 def write_keyed_json_file(base_directory, base_name, nth_file, file_batches_dict, query_results_dict, key_orders,
                           use_gzip_compression=True, use_ujson=True):
+    """Write query"""
+
     json_file_name = os.path.join(base_directory, base_name + "_" + str(nth_file) + ".json")
     sort_order_file_name = os.path.join(base_directory, base_name + "_" + str(nth_file) + "_key_order.json")
 
@@ -44,11 +40,14 @@ def write_keyed_json_file(base_directory, base_name, nth_file, file_batches_dict
     return file_batches_dict
 
 
-def main(query_to_run, base_directory, base_name, runtime_config, size_of_batches=5000, overwritten_collection_name=None):
+def write_document_from_main(query_to_run, base_directory, base_name, runtime_config, size_of_batches=5000,
+                             overwritten_collection_name=None):
+    """Write a document from document database"""
 
     connection_string = runtime_config["connection_string"]
     database_name = runtime_config["database_name"]
     client = pymongo.MongoClient(connection_string)
+
     if overwritten_collection_name is None:
         collection_name = runtime_config["collection_name"]
     else:
@@ -58,7 +57,6 @@ def main(query_to_run, base_directory, base_name, runtime_config, size_of_batche
     collection = database[collection_name]
 
     cursor = collection.find(query_to_run)
-
     i = 0
     j = 0
 
@@ -95,28 +93,53 @@ def main(query_to_run, base_directory, base_name, runtime_config, size_of_batche
 
     return file_batches_dict
 
-if __name__ == "__main__":
-    query_to_run_json = sys.argv[1]
 
-    with open(query_to_run_json, "r") as f:
-        query_to_run = json.load(f)
+def load_document_main(json_json_files_to_process, runtime_json, collection_name_override=None):
+    with open(runtime_json, "r") as fj:
+        runtime_config = json.load(fj)
 
-    pprint.pprint(query_to_run)
+    mongo_db_config = runtime_config["mongo_db_config"]
+    connection_string = mongo_db_config["connection_string"]
+    database_name = mongo_db_config["database_name"]
 
-    base_directory = sys.argv[2]
-    base_name = sys.argv[3]
-    runtime_config_json = sys.argv[4]
-
-    if len(sys.argv) > 5:
-        collection_name = sys.argv[5]
-
-    with open(runtime_config_json, "r") as f:
-        runtime_config = json.load(f)
-
-    if "batch_size" in runtime_config["source_db_config"]:
-        batch_size = runtime_config["source_db_config"]["batch_size"]
+    if collection_name_override is None:
+        collection_name = mongo_db_config["collection_name"]
     else:
-        batch_size = 5000
+        collection_name = collection_name_override
 
-    main(query_to_run, base_directory, base_name, runtime_config["mongo_db_config"],
-         size_of_batches=batch_size, overwritten_collection_name=collection_name)
+    refresh_collection = mongo_db_config["refresh_collection"]
+    print("Connecting to MongoDB '%s'" % connection_string)
+    client = pymongo.MongoClient(connection_string)
+
+    database = client[database_name]
+    collection = database[collection_name]
+
+    if refresh_collection:
+        collection.delete_many({})
+
+    initial_collection_count = collection.count()
+
+    with open(json_json_files_to_process, "r") as fj:
+        json_files_to_to_process = json.load(fj)
+
+        j = 0
+        for json_file_dict in json_files_to_to_process:
+            json_file_name = json_file_dict["data_json_file"]
+            print("Loading '%s'" % json_file_name)
+
+            data_dict = data_dict_load(json_file_name)
+            i = 0
+            for datum_key in data_dict:
+
+                collection.insert(data_dict[datum_key],
+                                  check_keys=False)  # Have to makes sure keys do not have a "." or "$" in it
+
+                if i > 0 and i % 500 == 0:
+                    print("Inserted '%s' documents" % i)
+                i += 1
+            j += i
+
+        print("Inserted '%s' total documents" % j)
+
+    print("Added %s items in collection '%s' housed in database '%s'" % (
+    collection.count() - initial_collection_count, collection_name, database_name))

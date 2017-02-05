@@ -1,7 +1,7 @@
 
 import h5py
 import csv
-from utility_prediction import get_all_paths
+from utility_functions import get_all_paths
 import sys
 
 

@@ -1,6 +1,6 @@
 __author__ = 'janos'
 
-from utility_prediction import *
+from utility_functions import *
 try:
     import ujson as json
 except ImportError:
@@ -8,11 +8,10 @@ except ImportError:
 
 import h5py
 import numpy as np
-import sys
 import os
 import datetime
 
-from utility_prediction import data_dict_load
+from utility_functions import data_dict_load
 
 
 def filter_list_of_interest(list_to_filter, filter_to_apply):
@@ -781,15 +780,3 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, refresh_templ
     combined_hdf5 = h5py.File(all_hdf5_file_name, "w")
 
     combine_exported_hdf5_files_into_single_file(combined_hdf5, generated_hdf5_file_names, total_number_of_rows)
-
-
-if __name__ == "__main__":
-    #TODO: Add option for mapping from an existing master file
-    if len(sys.argv) == 4:
-        main(sys.argv[1], sys.argv[2], sys.argv[3])
-    elif len(sys.argv) == 5:
-        main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    elif len(sys.argv) == 2 and sys.argv[1] == "help":
-        print("Usage: python build_hdf5_matrix_from_document.py data_file_base_name batch_dict.json data_template.json")
-    else:
-        main("matrix_build", "./test/test_simple_batch.json", "./test/configuration_to_build_matrix.json")

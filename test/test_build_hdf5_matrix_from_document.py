@@ -1,11 +1,12 @@
 __author__ = 'janos'
 
+import json
+import os
 import unittest
 import h5py
-import build_hdf5_matrix_from_document as bhm
 import numpy as np
-import os
-import json
+import document_hdf5
+
 
 class RunHDF5Mapping(unittest.TestCase):
 
@@ -33,7 +34,7 @@ class RunHDF5Mapping(unittest.TestCase):
 
     def test_filter_and_first_set(self):
 
-        bhm.main("filter_test", "./files/test_single_file_batch.json", "./files/configuration_to_build_matrix.json")
+        document_hdf5.main("filter_test", "./files/test_single_file_batch.json", "./files/configuration_to_build_matrix.json")
         f5 = h5py.File("./files/filter_test_1.hdf5",'r')
 
         lab_first = f5["/independent/classes/lab/first/core_array"][...]
@@ -48,7 +49,7 @@ class RunHDF5Mapping(unittest.TestCase):
         if os.path.exists("./files/transaction_test_1.hdf5"):
             os.remove("./files/transaction_test_1.hdf5")
 
-        bhm.main("transaction_test", "./files/test_single_file_batch.json", "./files/configuration_to_build_matrix.json")
+        document_hdf5.main("transaction_test", "./files/test_single_file_batch.json", "./files/configuration_to_build_matrix.json")
         f5 = h5py.File("./files/transaction_test_1.hdf5",'r')
         dca = f5["/independent/classes/discharge/core_array"][...]
         self.assertEquals(dca.shape, (2, 5))
@@ -82,12 +83,12 @@ class RunHDF5Mapping(unittest.TestCase):
         if os.path.exists("./files/transaction_test_1.hdf5"):
             os.remove("./files/transaction_test_1.hdf5")
 
-        bhm.main("transaction_test", "./files/test_all_file_batch_gz.json", "./files/configuration_to_build_matrix.json")
+        document_hdf5.main("transaction_test", "./files/test_all_file_batch_gz.json", "./files/configuration_to_build_matrix.json")
 
     def test_mapping_split_file(self):
 
-        bhm.main("transaction_test_split", "./files/test_simple_batch.json", "./files/configuration_to_build_matrix.json")
-        bhm.main("transaction_test_combined", "./files/test_all_file_batch.json", "./files/configuration_to_build_matrix.json")
+        document_hdf5.main("transaction_test_split", "./files/test_simple_batch.json", "./files/configuration_to_build_matrix.json")
+        document_hdf5.main("transaction_test_combined", "./files/test_all_file_batch.json", "./files/configuration_to_build_matrix.json")
 
         f5s1 = h5py.File("./files/transaction_test_split_1.hdf5", 'r')
         f5s2 = h5py.File("./files/transaction_test_split_2.hdf5", 'r')
