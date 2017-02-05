@@ -1,7 +1,6 @@
 __author__ = 'janos'
 
 from utility_functions import *
-import sqlalchemy as sa
 
 try:
     import ujson

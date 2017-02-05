@@ -11,7 +11,7 @@ import h5py
 
 
 def data_dict_load(data_dict_json_file_name):
-
+    """Load a JSON dict even if the JSON dict is compressed"""
     if data_dict_json_file_name[-2:] == "gz":
         with gzip.open(data_dict_json_file_name, "rb") as f:
             data_dict = json.loads(f.read().decode("ascii"))
@@ -36,7 +36,6 @@ def get_all_paths(h5py_group):
 
 
 def copy_data_set(h5p1, h5p2, path, compression="gzip"):
-
     ds1 = h5p1[path]
     source_shape = ds1.shape
     source_dtype = ds1.dtype
