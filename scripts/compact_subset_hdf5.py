@@ -2,7 +2,7 @@
     Subset vertically and horizontally an HDF5 file.
 """
 
-from utility_functions import main_subset
+from prediction_matrix_generate.utility_functions import main_subset
 import sys
 import json
 

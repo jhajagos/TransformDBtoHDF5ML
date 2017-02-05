@@ -669,7 +669,7 @@ def combine_exported_hdf5_files_into_single_file(h5p_master, hdf5_files, total_r
     core_array_path_dict = {}
     core_array_path_position = {}
     for core_array_path in core_array_list:
-        new_core_data_set = create_dataset_with_new_number_of_rows(h5template, h5p_master, core_array_path, total_row_count)
+        new_core_data_set = create_data_set_with_new_number_of_rows(h5template, h5p_master, core_array_path, total_row_count)
         core_array_path_dict[core_array_path] = new_core_data_set
         core_array_path_position[core_array_path] = 0
 
@@ -682,7 +682,7 @@ def combine_exported_hdf5_files_into_single_file(h5p_master, hdf5_files, total_r
         for core_array_path in core_array_path_dict:
             ds1 = core_array_path_dict[core_array_path]
 
-            new_starting_position = copy_into_dataset_starting_at(ds1, h5pc, core_array_path, core_array_path_position[core_array_path])
+            new_starting_position = copy_into_data_set_starting_at(ds1, h5pc, core_array_path, core_array_path_position[core_array_path])
             core_array_path_position[core_array_path] = new_starting_position
 
 

@@ -97,7 +97,7 @@ class TestDBMappingJSON(unittest.TestCase):
     def test_json_mapping_split_file(self):
 
         mapping_jsons, order_json = db_document.main_json("./files/test_mapping_document.json",
-                                                                             "./files/runtime_config_test_split.json")
+                                                          "./files/runtime_config_test_split.json")
 
         mapping_json_one = mapping_jsons[0]
         mapping_json_two = mapping_jsons[1]
@@ -109,7 +109,6 @@ class TestDBMappingJSON(unittest.TestCase):
 
             for key in keys:
                 self.assertTrue(key in mapping_dict.keys())
-
 
         with open(mapping_json_two, "r") as f:
             mapping_dict = json.load(f)

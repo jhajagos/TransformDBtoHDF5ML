@@ -2,7 +2,7 @@
 non zero elements, the fraction that are non-zero
 """
 
-from utility_functions import get_all_paths
+from prediction_matrix_generate.utility_functions import get_all_paths
 import csv
 import h5py
 import numpy as np

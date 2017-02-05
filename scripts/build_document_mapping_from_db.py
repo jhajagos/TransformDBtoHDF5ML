@@ -1,8 +1,14 @@
-import sys
-from db_document import main_json
+import argparse
+
+from prediction_matrix_generate.db_document import main_json
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        print("Usage: python build_document_mapping_from_db.py inpatient_config.json runtime_config.json")
-    else:
-        main_json(sys.argv[1], sys.argv[2])
+
+    argparse_obj = argparse.ArgumentParser()
+
+    argparse_obj.add_argument("-c", "--db_map_json", dest="db_map_json_filename", help="A JSON file encouding the mapping the DB to a document")
+    argparse_obj.add_argument("-r", "--runtime_config_json", dest="run_time_config_json",
+                              help="A JSON file which includes runtime environment details")
+
+    arg_obj = argparse_obj.parse_args()
+    main_json(arg_obj.rsb_map_json_filename, arg_obj.run_time_config_json)

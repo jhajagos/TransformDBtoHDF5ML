@@ -1,6 +1,6 @@
 import sys
 import json
-from post_process_hdf5 import main
+from prediction_matrix_generate.post_process_hdf5 import main
 
 if __name__ == "__main__":
 

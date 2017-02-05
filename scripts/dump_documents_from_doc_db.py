@@ -3,7 +3,7 @@ This program extracts a collection from a MongoDB instance and formats in a way 
 pipeline works.
 """
 
-from document import write_document_from_main as main
+from prediction_matrix_generate.document import write_document_from_main as main
 import json
 import pprint
 import sys

@@ -2,10 +2,8 @@ import json
 import os
 import pprint
 import unittest
-
+from prediction_matrix_generate.document import write_document_from_main
 import pymongo
-
-from scripts import dump_documents_from_doc_db
 
 
 class TestDumpJSON(unittest.TestCase):
@@ -48,17 +46,18 @@ class TestDumpJSON(unittest.TestCase):
 
     def test_extract(self):
 
-        batches_dict_1 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "F"}, "./files/",
+        batches_dict_1 = write_document_from_main({"independent.classes.discharge.gender": "F"}, "./files/",
                                                          "test_dump_docs_1",
                                                          self.test_config["mongo_db_config"])
+
         print(batches_dict_1[0]["data_json_file"])
         with open(batches_dict_1[0]["data_json_file"], "r") as f:
             data_dict_1 = json.load(f)
             self.assertEquals(2, len(data_dict_1))
 
-        batches_dict_2 = dump_documents_from_doc_db.main({"independent.classes.discharge.gender": "M"}, "./files/",
-                                                           "test_dump_docs_2",
-                                                         self.test_config["mongo_db_config"])
+        batches_dict_2 = write_document_from_main({"independent.classes.discharge.gender": "M"}, "./files/",
+                                                    "test_dump_docs_2",
+                                                    self.test_config["mongo_db_config"])
 
         with open(batches_dict_2[0]["data_json_file"], "r") as f:
             data_dict_2 = json.load(f)

@@ -40,7 +40,6 @@ class RunHDF5Mapping(unittest.TestCase):
         lab_first = f5["/independent/classes/lab/first/core_array"][...]
         lab_first_day = f5["/independent/classes/lab/first_day/core_array"][...]
 
-
         self.assertNotEqual(lab_first.tolist(), lab_first_day.tolist())
 
 

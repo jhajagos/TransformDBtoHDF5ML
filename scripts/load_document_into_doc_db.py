@@ -1,4 +1,5 @@
 from document import load_document_main as main
+import sys
 
 """
 A simple program for loading JSON dicts into a MongoDB collection

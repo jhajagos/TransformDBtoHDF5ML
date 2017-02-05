@@ -36,6 +36,7 @@ def get_all_paths(h5py_group):
 
 
 def copy_data_set(h5p1, h5p2, path, compression="gzip"):
+    """Copy a data_set from one path to another"""
     ds1 = h5p1[path]
     source_shape = ds1.shape
     source_dtype = ds1.dtype
@@ -44,7 +45,7 @@ def copy_data_set(h5p1, h5p2, path, compression="gzip"):
     ds2[...] = ds1[...]
 
 
-def create_dataset_with_new_number_of_rows(h5p1, h5p2, path, new_number_rows, compression="gzip"):
+def create_data_set_with_new_number_of_rows(h5p1, h5p2, path, new_number_rows, compression="gzip"):
     ds1 = h5p1[path]
     source_dtype = ds1.dtype
 
@@ -53,7 +54,7 @@ def create_dataset_with_new_number_of_rows(h5p1, h5p2, path, new_number_rows, co
     return ds2
 
 
-def copy_into_dataset_starting_at(ds1, h5p2, path, starting_position):
+def copy_into_data_set_starting_at(ds1, h5p2, path, starting_position):
     ds2 = h5p2[path]
     ds2_shape = ds2.shape
     ds2_rows = ds2_shape[0]
@@ -257,7 +258,7 @@ def main_subset(hdf5_file_name, hdf5_file_name_to_write_to, queries_to_select_li
         all_paths = get_all_paths(fp5["/"])
         for path in all_paths:
             if "core_array" in path.split("/"):
-                core_array_ds = create_dataset_with_new_number_of_rows(fp5, wfp5, path, row_array[0].shape[0])
+                core_array_ds = create_data_set_with_new_number_of_rows(fp5, wfp5, path, row_array[0].shape[0])
                 core_array_ds[...] = fp5[path][row_array[0], :]
             else:
                 copy_data_set(fp5, wfp5, path, compression="gzip")
