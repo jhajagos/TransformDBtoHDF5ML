@@ -384,7 +384,8 @@ python build_hdf5_matrix_from_document.py data_file_base_name batch_dict.json da
 
 ## Filtering the generated HDF5 file
 
+### Selecting columns
+
+### Selecting rows
 
 ## Post processing the generated HDF5 file
-
-
