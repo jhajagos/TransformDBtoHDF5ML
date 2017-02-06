@@ -8,9 +8,8 @@ import h5py
 import numpy as np
 import argparse
 
+
 #TODO: Add path list
-
-
 def main(hdf5_filename, csv_file_name=None, threshold_value_to_include=0.01):
     fp5 = h5py.File(hdf5_filename)
 
@@ -57,7 +56,7 @@ if __name__ == "__main__":
     argparse_obj = argparse.ArgumentParser()
 
     argparse_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename", help="HDF5 file to summarize")
-    argparse_obj.add_argument("-m", "--mark-frequency_by_fraction", dest="threshold_value_to_include", default=0.01, type=float,
+    argparse_obj.add_argument("-m", "--mark-frequency-by-fraction", dest="threshold_value_to_include", default=0.01, type=float,
                               help="Mark records that occur at a fraction of at least between 0 and 1"
                              )
 

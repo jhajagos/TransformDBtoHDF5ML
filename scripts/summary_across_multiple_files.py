@@ -3,7 +3,11 @@ import prediction_matrix_generate.utility_functions as upx
 import csv
 import h5py
 import numpy as np
-import sys
+import argparse
+
+"""
+Generates a CSV file which lists basic statistics on multiple HDF5 files enclosed in a starting directory
+"""
 
 
 def main(starting_directory):
@@ -42,4 +46,9 @@ def main(starting_directory):
                                 csv_writer.writerow(row_to_write)
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    argparse_obj = argparse.ArgumentParser()
+    argparse_obj.add_argument("-d", "--directory", dest="directory",
+                              help="Starting directory to recurse through and compute basic statistics on.")
+
+    arg_obj = argparse_obj.parse_args()
+    main(arg_obj.directory)

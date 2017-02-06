@@ -1,7 +1,6 @@
 """
     Utility functions for working with HDF5 files created by the library
     'build_hdf5_matrix_from_document.py'
-
 """
 
 import numpy as np
