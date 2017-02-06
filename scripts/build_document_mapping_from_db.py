@@ -11,4 +11,4 @@ if __name__ == "__main__":
                               help="A JSON file which includes runtime environment details")
 
     arg_obj = argparse_obj.parse_args()
-    main_json(arg_obj.rsb_map_json_filename, arg_obj.run_time_config_json)
+    main_json(arg_obj.db_map_json_filename, arg_obj.run_time_config_json)
