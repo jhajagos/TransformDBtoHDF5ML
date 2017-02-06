@@ -12,10 +12,10 @@ if __name__ == "__main__":
     # TODO: Add support for GZIP json
 
     argparse_obj = argparse.ArgumentParser()
-    argparse_obj.add_argument("-b", "--batch_json_filename", dest="batch_json_filename", help="")
-    argparse_obj.add_argument("-r", "--runtime_config_json", dest="run_time_config_json",
+    argparse_obj.add_argument("-b", "--batch-json-filename", dest="batch_json_filename", help="")
+    argparse_obj.add_argument("-r", "--runtime-config-json", dest="run_time_config_json",
                               help="A JSON file which includes runtime environment details")
-    argparse_obj.add_argument("-c", "--collection_name", dest="collection_name", default=None,
+    argparse_obj.add_argument("-c", "--collection-name", dest="collection_name", default=None,
                               help="Optional: MongoDB collection name to load into")
 
     load_document_main()

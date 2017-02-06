@@ -16,6 +16,7 @@ import os
 import datetime
 import time
 from utility_functions import data_dict_load
+import sqlalchemy as sa
 
 
 def filter_list_of_interest(list_to_filter, filter_to_apply):
@@ -784,12 +785,6 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, refresh_templ
     combined_hdf5 = h5py.File(all_hdf5_file_name, "w")
 
     combine_exported_hdf5_files_into_single_file(combined_hdf5, generated_hdf5_file_names, total_number_of_rows)
-
-
-__author__ = 'jhajagos'
-
-import sqlalchemy as sa
-
 
 
 

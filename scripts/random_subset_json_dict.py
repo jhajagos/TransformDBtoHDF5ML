@@ -38,8 +38,8 @@ def main(json_dict_file_name, n_samples):
 if __name__ == "__main__":
 
     argparser_obj = argparse.ArgumentParser()
-    argparser_obj.add_argument("-f", "--json_filename", dest="json_filename", help="JSON file that is a keyed dictionary to sample from")
-    argparser_obj.add_argument("-n", dest="n_samples", type=int, help="Number of random samples to take from the larger JSON file")
+    argparser_obj.add_argument("-f", "--json-filename", dest="json_filename", help="JSON file that is a keyed dictionary to sample from")
+    argparser_obj.add_argument("-n", "--n-samples", dest="n_samples", type=int, help="Number of random samples to take from the larger JSON file")
 
     arg_obj = argparser_obj.parse_args()
     main(arg_obj.json_filename, arg_obj.n_samples)

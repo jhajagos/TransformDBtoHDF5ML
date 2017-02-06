@@ -36,8 +36,8 @@ if __name__ == "__main__":
 
     arg_parser_obj = argparse.ArgumentParser()
 
-    arg_parser_obj.add_argument("-f", "--hdf5_filename", dest="hdf5_filename", help="HDF5 file which to add links to")
-    arg_parser_obj.add_argument("-c", "--csv_filename", dest="csv_filename",
+    arg_parser_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename", help="HDF5 file which to add links to")
+    arg_parser_obj.add_argument("-c", "--csv-filename", dest="csv_filename",
                                 help="CSV file which contains mappings. The file must have two columns 'map_from' and 'map_to'")
 
     arg_obj = arg_parser_obj.parse_args()

@@ -27,19 +27,19 @@ def main(starting_directory):
                     if group_paths is not None:
                         for group_path in group_paths:
                             if group_path.split("/")[-1] == "core_array":
-                               numeric_array = h5[group_path]
-                               non_zero = np.where(numeric_array[...] > 0)
-                               n_rows, n_columns = numeric_array.shape
-                               n_cells = n_rows * n_columns
-                               n_non_zero = len(non_zero[0])
-                               if n_cells is None or n_cells == 0:
-                                   fraction_non_zero = None
-                               else:
-                                   fraction_non_zero = 1.0 * n_non_zero / n_cells
+                                numeric_array = h5[group_path]
+                                non_zero = np.where(numeric_array[...] > 0)
+                                n_rows, n_columns = numeric_array.shape
+                                n_cells = n_rows * n_columns
+                                n_non_zero = len(non_zero[0])
+                                if n_cells is None or n_cells == 0:
+                                    fraction_non_zero = None
+                                else:
+                                    fraction_non_zero = 1.0 * n_non_zero / n_cells
 
-                               row_to_write = [dir_name, os.path.split(dir_name)[-1], file_name, group_path, n_rows, n_columns, n_cells, n_non_zero, fraction_non_zero]
-                               print(row_to_write)
-                               csv_writer.writerow(row_to_write)
+                                row_to_write = [dir_name, os.path.split(dir_name)[-1], file_name, group_path, n_rows, n_columns, n_cells, n_non_zero, fraction_non_zero]
+                                print(row_to_write)
+                                csv_writer.writerow(row_to_write)
 
 if __name__ == "__main__":
     main(sys.argv[1])

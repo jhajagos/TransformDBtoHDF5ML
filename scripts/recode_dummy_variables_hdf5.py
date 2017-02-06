@@ -84,7 +84,7 @@ def main(file_name):
 
 if __name__ == "__main__":
     argparse_obj = argparse.ArgumentParser()
-    argparse_obj.add_argument("-f", "--hdf5_filename", dest="hdf5_filename")
+    argparse_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename")
 
     arg_obj = argparse_obj.parse_args()
     main(arg_obj.hdf5_filename)

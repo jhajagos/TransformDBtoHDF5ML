@@ -11,14 +11,14 @@ import argparse
 if __name__ == "__main__":
 
     argparse_obj = argparse.ArgumentParser()
-    argparse_obj.add_argument("-q", "--query_json_filename", dest="query_json_filename")
-    argparse_obj.add_argument("-n", "--batch_file_size", dest="batch_file_size", default=5000, type=int)
+    argparse_obj.add_argument("-q", "--query-json-filename", dest="query_json_filename")
+    argparse_obj.add_argument("-n", "--batch-file-size", dest="batch_file_size", default=5000, type=int)
     argparse_obj.add_argument("-d", "--directory", dest="base_directory", default="./")
-    argparse_obj.add_argument("-r", "--runtime_config_json", dest="run_time_config_json",
+    argparse_obj.add_argument("-r", "--runtime-config-json", dest="run_time_config_json",
                               help="A JSON file which includes runtime environment details")
-    argparse_obj.add_argument("-c", "--collection_name", dest="collection_name",
+    argparse_obj.add_argument("-c", "--collection-name", dest="collection_name",
                               help="MongoDB collection name to load into")
-    argparse_obj.add_argument("-a", "--base_filename_prefix", dest="base_filename",
+    argparse_obj.add_argument("-a", "--base-filename-prefix", dest="base_filename",
                               help="Prefix to add to the filename")
 
     arg_obj = argparse_obj.parse_args()
