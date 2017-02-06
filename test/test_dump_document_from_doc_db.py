@@ -47,10 +47,11 @@ class TestDumpJSON(unittest.TestCase):
     def test_extract(self):
 
         batches_dict_1 = write_document_from_main({"independent.classes.discharge.gender": "F"}, "./files/",
-                                                         "test_dump_docs_1",
-                                                         self.test_config["mongo_db_config"])
+                                                   "test_dump_docs_1",
+                                                   self.test_config["mongo_db_config"])
 
         print(batches_dict_1[0]["data_json_file"])
+
         with open(batches_dict_1[0]["data_json_file"], "r") as f:
             data_dict_1 = json.load(f)
             self.assertEquals(2, len(data_dict_1))

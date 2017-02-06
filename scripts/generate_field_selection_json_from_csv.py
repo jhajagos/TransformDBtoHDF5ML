@@ -3,7 +3,7 @@ import json
 import argparse
 
 
-def main(csv_file_name, criteria_field="to_include"):
+def main(csv_filename, criteria_field="to_include"):
     """
         Generate a JSON file that specifies which fields to filter from an HDF5 file
         container. Field selection is based CSV on which fields are specified by a column
@@ -13,7 +13,7 @@ def main(csv_file_name, criteria_field="to_include"):
 
     path_field_selection = {}
     path_field_order = []
-    with open(csv_file_name, "rb") as fw:
+    with open(csv_filename, "rb") as fw:
         csv_list_dict = csv.DictReader(fw)
 
         c1_field = "c1"
@@ -53,7 +53,7 @@ def main(csv_file_name, criteria_field="to_include"):
         for path in path_field_order:
             path_fields_list += [[path] + path_field_selection[path]]
 
-        json_file_name = csv_file_name + ".json"
+        json_file_name = csv_filename + ".json"
 
         with open(json_file_name, "wb") as fw:
             json.dump(path_fields_list, fw, sort_keys=True, indent=4, separators=(',', ': '))
@@ -61,8 +61,8 @@ def main(csv_file_name, criteria_field="to_include"):
 if __name__ == "__main__":
 
     argparse_obj = argparse.ArgumentParser()
-    argparse_obj.add_argument("-f", "--csv-filename", dest="csv-filename", help="CSV filename to read to determine which fields to filter",
-                              type=argparse.FileType("r"))
+    argparse_obj.add_argument("-f", "--csv-filename", dest="csv_filename",
+                              help="CSV filename to read to determine which fields to filter")
     argparse_obj.add_argument("-c", "--column-name", dest="column_name", default="to_include",
                               help="Optional field to use for field selection")
 

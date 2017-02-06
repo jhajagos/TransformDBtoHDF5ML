@@ -73,7 +73,7 @@ def query_rows_hdf5(h5p, queries):
     [
      ("/discharge/demographic", ["gender","m"], 1),
      ("/discharge/demographic", "age", [65, 66, 67]),
-     ("/lab/values", "attribute": "a1c", 8, ">=")
+     ("/lab/values", "a1c", 8, ">=")
     ]
 
     The query is select all males who are between the ages of 65 and 67 and who have
