@@ -570,6 +570,9 @@ A simple list of selection criteria can be used to reduce the number of rows acr
 ]
 ```
 The filter is applied against all rows in all paths in the HDF5 container.
+```bash
+python compact_subset_hdf5.py -f hdf5_filename.hdf5 hdf5_filename.hdf5.summary.csv.out.hdf5 -c hdf5_filename.hdf5.summary.csv 
+```
 
 ## Post processing the generated HDF5 container
 
@@ -591,5 +594,5 @@ Additional post processing of a matrix in the HDF5 container can be specified.
 
 The post processing is run as:
 ```bash
-python compact_subset_hdf5.py -f hdf5_filename.hdf5 hdf5_filename.hdf5.summary.csv.out.hdf5 -c hdf5_filename.hdf5.summary.csv 
+python post_process_hdf5_with_rules.py -f hdf5_filename.hdf5 -r rules.json
 ```
