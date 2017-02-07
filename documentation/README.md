@@ -1,20 +1,19 @@
-# Overview of the pipeline
+# Overview 
 
-This tutorial describes the process of creating, executing and updating maps from relation database tables to the HDF5 file 
-matrix format. Between the relational database and the HDF5 format there is a JSON format.
-The pipeline can be run at various  points and does not need to be run to the final endpoint. A user may only want to 
-map to a JSON document so it can be loaded into a MongoDB instance and another user might start with a JSON document 
-and want to generate an HDF5 file.
+This manual describes the process of creating, executing and updating maps from relation database 
+tables to the HDF5 matrix container format. The first step in the pipeline maps a database table 
+to a JSON document. The JSON document is then mapped into the HDF5 matrix container format.
 
-# Going from relational database to a JSON document
+# Transforming relational database tables to a collection of JSON documents
 
 ## Mapping a single database table
 
 ### Setting up the runtime_config.json 
 
-The `runtime_config.json` file is for setting parameters which will change. In general the runtime_config.json
-is not a version controlled file as it may contain passwords to connect to a database. It is divided in 
-three sections. Only two sections are mandatory.
+The `runtime_config.json` file is for setting parameters which will change at runtime. 
+In general the `runtime_config.json` is not a version controlled file as it may contain passwords 
+to connect to a database server. The file is divided in three sections. Only two of the sections 
+are mandatory.
 
 ```json
 {
@@ -52,12 +51,12 @@ The first section `"source_db_config"` describes the source database which data 
 ```
 
 The `"connection_string"` is a SQLAlchemy formatted [connection string](http://docs.sqlalchemy.org/en/latest/core/engines.html). 
-In the example here it is connecting
-to a local SQLite database. The two supported database system are SQLite and PostgreSQL. The 
-parameter `"limit"` is used for testing purposes to evaluate mapper output. By setting the
-parameter to `null` then there is no limit. The parameter `"refresh_transactions_table"` is set by default to `1` to 
-refresh an internal table that is used to join against. The final optional parameter is `"batch_size"` which sets the number
-of records that are included in each JSON file.
+In this example it is connecting to a SQLite file database. The mapper supports SQLite and PostgreSQL relational databases. 
+The parameter `"limit"` is used for testing purposes to evaluate mapper output. By setting the
+parameter to an integer n the mapper will be applied to n rows. The default value for this field is `null` 
+with no limit. The parameter `"refresh_transactions_table"` is set by default to `1` to 
+refresh an internal table that is used to join against. 
+The final optional parameter is `"batch_size"` which sets the number of records that are included in each JSON file.
 
 ```json
 {
@@ -69,9 +68,11 @@ of records that are included in each JSON file.
 The `"data_directory"` is the file path. It should be written in a OS specific format, on a Linux system: 
 `"/data/analysis/"` or in a windows environment: `"E:\\data\\analysis\"`. The parameter `"base_file_name"` is 
 the prefix name for the JSON files, for example, setting it to `"encounters"` will generate 
-files `"encounters_1.json"`, `"encounters_2.json"`, ... 
+files `"encounters_1.json"`, `"encounters_2.json"`, ... `"encounters_k.json"` where `k` 
+is the last file number.
 
-To store the JSON results in a MongoDB instance then the configuration section `"mongo_db_config"`: 
+To store the JSON results in a MongoDB instance the configuration section `"mongo_db_config"` needs to
+be set: 
 ```json
 {
     "connection_string": "mongodb://localhost",
@@ -81,18 +82,20 @@ To store the JSON results in a MongoDB instance then the configuration section `
  }
  ```
  
- The parameter `"refresh_collection"` with a value `1` will replace an existing collection.
+The parameter `"refresh_collection"` with a value `1` will replace an existing collection.
 
- For more optimal processing of large number of data there are two additional options. These options make the outputted
- JSON files less readable. The `"use_ujson"` which is default `0` or `false` is to use the UltraJSON library which is faster than
- the standard JSON library. The final option which saves considerable disk 
- storage space is to use the gzip compression library
- on the generated JSON files.
+ For more optimal processing of large number of data there are two additional options. 
+ These options make the outputted JSON documents less readable. The `"use_ujson"` which is default `0` 
+ or `false` is to use the UltraJSON library which is significantly faster than
+ the standard JSON library. The final option which saves disk storage space is to use the 
+ gzip compression library on the generated JSON files.
+ 
+ For mapping large volumes of data these options should be set.
 
 ### Creating a mapping.json file
 
-The mapping file describes how table data gets mapped to a JSON document. The simplest mapping.json
-file includes a single mapping rule:
+The mapping file describes how table row data gets mapped to a JSON document. The simplest mapping.json
+only includes a single mapping rule:
 
 ```json
 {
@@ -132,7 +135,7 @@ a `"name"`, `"path"` and a `"type"`. Data is stored in nested dictionaries which
  `["dependent", "discharge"]`.
 
 The `"type"` parameter supports the following maps: `"one-to-one"`, `"one-to-many"` and `"one-to-many-class"`. The
-simplest to start with is `"one-to-one"`.  This pairs a `"transaction_id"` with one and only one row of the target table
+simplest is `"one-to-one"`.  This pairs a `"transaction_id"` with one and only one row of the target table
  specified by the `"table_name"` parameter. 
 
 ```json
@@ -170,12 +173,12 @@ To get to the discharge details for `"transaction_id" = "999"` would be
 `discharge_dict["999"]["independent"]["classes"]["discharge"]`. The final required parameter is 
 `"fields_to_include"` which are the names of the database fields in the table to include in the extract.
 
-
 ## Mapping multiple relational database tables
 
-The `"one-to-many`" maps a relation that is one-to-many between two database tables. As an example, an ordered set of diagnoses 
-associated with a discharge that are stored in a separate table. The two tables will need to be linked by a common transaction id field.
-The transaction ID field must share the same name across both tables and be of the same type.
+The `"one-to-many`" maps a relation that is one-to-many between two database tables. As an example, 
+an ordered set of diagnoses associated with a discharge that are stored in a separate table. The two tables will need 
+to be linked by a common transaction id field. The transaction ID field must share the same name across both tables 
+and be of the same type.
 
 ```json
 {
@@ -190,8 +193,8 @@ The transaction ID field must share the same name across both tables and be of t
 ```
 
 An additional required parameter is `"fields_to_order_by"`. This parameter must include the linking field and
-the ordering parameter. In the above case that is `"sequence_id"`. If this is not set correctly 
-the program will break apart your rows incorrectly.
+the ordering parameter. In the above case it is the `"sequence_id"`. If this is not set correctly 
+the mapping process will have errors and fail.
 
 The mapping `"one-to-many-class"` is similar to `"one-to-many"` except it splits the lists
 into keyed entries in a dictionary/hash table. 
@@ -216,25 +219,28 @@ a specific test.
 
 ## Running the DB to document mapper script
 
-Once the `runtime_config.json` and the `mapping_config.json` files running the 
-script is straight forward. The JSON files can have any name but the mapping file
-comes before the runtime file.
+Once the `runtime_config.json` and the `mapping_config.json` the mapper
+script can be run. 
 
 ```bash
 python build_document_mapping_from_db.py -c mapping_config.json -r runtime_config.json
 ```
 
+The mapping file is given with `-c` flag and the runtime file is given with the `-r`. The script supports
+the `-h` or help option.
+
 The script will generate a set of JSON files that are stored in the `"data_directory"` 
 defined in the `runtime_config.json` file. The
 data will likely be split across multiple JSON files. The name of each generated file
 is stored in a file that starts with `"base_file_name"` defined parameter 
-and ends in `"_batches.json"`. This file is needed for further steps in the 
+and the file name ends in `"_batches.json"`. This file is needed for further steps in the 
 pipeline.
 
-# Mapping a JSON Document to HDF5
+# Mapping JSON Documents to a HDF5 matrix container
 
-Mapping a document to a matrix is an important step in machine learning  mining applications. 
-A mapping file provides instructions for mapping elements in JSON document into a flat 2D matrix format. 
+The JSON documents provide a structured way to examine data that is stored across multiple database tables.
+To apply machine learning or data mining algorithms to the JSON the document needs to be mapped to a matrix format.
+A mapping file provides instructions for mapping elements in the JSON document into a flat 2D matrix format. 
 A JSON document can be mapped multiple ways.
 
 ```json
@@ -260,8 +266,8 @@ A JSON document can be mapped multiple ways.
 ]
 ```
 The `"path"` correspond to the nested levels of the JSON document. 
-If the `"path"` is not found then the value is not mapped. The `"cell_value"` parameter
-corresponds to the field in the documents. The `"type"` parameter specifies the data type of the field referenced
+If the `"path"` is not found in a document then the value is not mapped. The `"cell_value"` parameter
+corresponds to the field in the document. The `"type"` parameter specifies the data type of the field referenced
 by `"cell_value"`.
 
 A JSON document can be mapped to multiple matrices stored in a HDF5 container.
@@ -272,15 +278,17 @@ The simplest document to map is a document not composed of nested lists or neste
 
 ### Float / Integer Variables
 
+Storing either an integer or a floating point value in a numeric matrix does not require any transformations.
+
 ### Categorical Variables
 
 In order for categorical variables to be used in a machine learning model it needs to be transformed into a numeric value.
-Such transformations are done throught a process known as dummy coding.
+Such transformations are done through a process known as dummy coding.
 
 ## Mapping nested lists
 
-Often a document will contain a nested list. A nested list is used to represent a one-to-many relationship which is 
-found in many databases.
+A JSON document can contain nested lists. A nested list is used to represent a one-to-many relationship which is 
+found in many relational databases.
 
 ### Mapping an ordered list
 
@@ -301,6 +309,8 @@ of categorical variables.
 ```
 
 ### Mapping a numeric list
+
+Only a single value can be stored in a 2-dimensional matrix.
 
 ```json
 {
@@ -374,12 +384,13 @@ of categorical variables.
 
 ## Running the HDF5 container mapper script 
 
-Once the JSON mapping file is written. 
+Once the mapping file is complete the matrix mapper script can be run. 
 ```bash
 python build_hdf5_matrix_from_document.py -a data_file_base_name -b batch_dict.json -c data_template.json
 ```
-The command requires a batch file that is generated by the mapper script.
+It is recommended when developing the matrix mapping file to run a small subset of the data.
 
+The mapper scripts requires a batch file that is generated by the mapper script.
 ```json
 [
     {
@@ -389,13 +400,16 @@ The command requires a batch file that is generated by the mapper script.
     }
 ]
 ```
+This file is automatically generated by the document mapper script and the user does not need to create it.
 
 Running the HDF5 mapper script will generate an HDF5 file with a base name `data_file_base_name_20170101.hdf5`.
 
 ## Exploring the HDF5 container in Python
 
-Each encoded matrix has three parts `/core_array`, `/column_annotations`, and `/column_headers`. 
+The mapper will create a single HDF5 file. A mapped matrix has three standard parts: 
+`/core_array`, `/column_annotations`, and `/column_headers`. 
 
+The example below shows how to access the encoded data in the file.
 ```python
 import h5py
 h5 = h5py.File("test_matrix_combined.hdf5","r")
@@ -420,10 +434,9 @@ h5["/independent/classes/diagnosis/column_header"][...]
 #      dtype='|S32')
 ```
 
-
 ## Basic summary file for an HDF5 container
 
-To summarize file for basic analysis the script `summary_quick_hdf5.py`.
+To summarize file for basic analysis the script `summary_quick_hdf5.py` can be run.
 
 ```bash
 python summary_quick_hdf5.py -f hdf5_filename.hdf5 -m 0.01
@@ -512,12 +525,13 @@ for field selection:
     ]
 ]
 ```
+This helps generate a smaller width matrix (less features) which can be easier to work with.
 
 ## Filtering the generated HDF5 container
 
 ### Selecting columns
 
-A JSON file of nested lists is used to encode which variables to include.
+A JSON file of nested lists is used to encode which variables or columns to include.
 ```json
 [
     [
@@ -546,6 +560,8 @@ A JSON file of nested lists is used to encode which variables to include.
 
 ### Selecting rows with a query
 
+A simple list of selection criteria can be used to reduce the number of rows across a matrix. 
+
 ```json
 [
      ["/discharge/demographic", ["gender","m"], 1],
@@ -553,9 +569,11 @@ A JSON file of nested lists is used to encode which variables to include.
      ["/lab/values", "a1c", 8, ">="]
 ]
 ```
+The filter is applied against all rows in all paths in the HDF5 container.
 
 ## Post processing the generated HDF5 container
 
+Additional post processing of a matrix in the HDF5 container can be specified.
 ```json
 [
    {
@@ -568,9 +586,10 @@ A JSON file of nested lists is used to encode which variables to include.
       "write_path": "/independent/classes/procedure_present/",
       "rule": "zero_or_one"
    }
- ]
+ ] 
 ```
 
+The post processing is run as:
 ```bash
 python compact_subset_hdf5.py -f hdf5_filename.hdf5 hdf5_filename.hdf5.summary.csv.out.hdf5 -c hdf5_filename.hdf5.summary.csv 
 ```
