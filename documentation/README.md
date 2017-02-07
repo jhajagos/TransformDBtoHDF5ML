@@ -571,7 +571,7 @@ A simple list of selection criteria can be used to reduce the number of rows acr
 ```
 The filter is applied against all rows in all paths in the HDF5 container.
 ```bash
-python compact_subset_hdf5.py -f hdf5_filename.hdf5 hdf5_filename.hdf5.summary.csv.out.hdf5 -c hdf5_filename.hdf5.summary.csv 
+python compact_subset_hdf5.py -f hdf5_filename.hdf5 -o hdf5_filename.hdf5.summary.csv.out.hdf5 -c hdf5_filename.hdf5.summary.csv 
 ```
 
 ## Post processing the generated HDF5 container
