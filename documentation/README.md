@@ -1,6 +1,6 @@
 # Overview 
 
-This manual describes the process of creating, executing and updating maps from relation database 
+This manual describes the process of creating, executing and updating maps from relational database 
 tables to the HDF5 matrix container format. The first step in the pipeline maps a database table 
 to a JSON document. The JSON document is then mapped into the HDF5 matrix container format.
 
