@@ -1,12 +1,11 @@
 import unittest
-import h5py
 from utility_functions import *
 
 
 class TestUtilityFunctions(unittest.TestCase):
 
     def setUp(self):
-        self.hp = h5py.File("./test/test_matrix_combined.hdf5")
+        self.hp = h5py.File("./files/test_matrix_combined.hdf5")
 
     def test_select_columns(self):
 
@@ -39,7 +38,7 @@ class TestUtilityFunctions(unittest.TestCase):
         print(column_dict)
         self.assertEqual(len(column_dict), 2)
 
-    def test_find_rows_with_rows(self):
+    def test_find_rows_with_queries(self):
 
         indices_array_1 = query_rows_hdf5(self.hp, [("/independent/classes/discharge", "age", 58)])
 
@@ -49,6 +48,7 @@ class TestUtilityFunctions(unittest.TestCase):
         indices_array_2 = query_rows_hdf5(self.hp, [("/independent/classes/discharge", "age", (50, 58))])
 
         self.assertEqual(len(indices_array_2), 2)
+        print(indices_array_2)
         self.assertEqual(indices_array_2.tolist(), [0,1])
 
         indices_array_3 = query_rows_hdf5(self.hp, [("/independent/classes/lab/last_item", "BUN", 0.5, ">")])
@@ -58,6 +58,11 @@ class TestUtilityFunctions(unittest.TestCase):
         indices_array_4 = query_rows_hdf5(self.hp, [("/independent/classes/discharge", "age", (50, 58)),
                                                     ("/independent/classes/lab/last_item", "Troponin", 0.0, ">")])
         self.assertEqual(len(indices_array_4), 1)
+
+        indices_array_5 = query_rows_hdf5(self.hp, [("/independent/classes/lab/last_item", "BUN", 0.0, "<")])
+        print(indices_array_5)
+        self.assertEqual(len(indices_array_5), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

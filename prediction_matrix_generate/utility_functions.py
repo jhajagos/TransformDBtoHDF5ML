@@ -81,7 +81,7 @@ def query_rows_hdf5(h5p, queries):
     """
 
     rows_that_match = None
-
+    local_rows_that_match = np.array([])
     for query in queries:
         path = query[0]
         field = query[1]
@@ -134,6 +134,7 @@ def query_rows_hdf5(h5p, queries):
                     rows_that_match = np.intersect1d(rows_that_match, local_rows_that_match)
                 else:
                     rows_that_match = local_rows_that_match
+
     return rows_that_match
 
 
