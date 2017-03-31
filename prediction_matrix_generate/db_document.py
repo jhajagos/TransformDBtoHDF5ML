@@ -17,6 +17,7 @@ import datetime
 import time
 from utility_functions import data_dict_load
 import sqlalchemy as sa
+import decimal
 
 
 def filter_list_of_interest(list_to_filter, filter_to_apply):
@@ -844,12 +845,19 @@ def build_dict_based_on_transaction_id_multi_class_query(rs, fields_of_interest,
                 except ValueError:
                     print("Invalid date: '%s'" % r[field])
                     multi_class_dict[field] = None
+            elif r[field].__class__ == datetime.date:
+                try:
+                    multi_class_dict[field] = r[field].strftime("%Y-%m-%d")
+                except ValueError:
+                    print("Invalid date: '%s'" % r[field])
+                    multi_class_dict[field] = None
+            elif r[field].__class__ == decimal.Decimal:
+                multi_class_dict[field] = float(r[field])
             else:
                 multi_class_dict[field] = r[field]
 
         if last_transaction_id is None:
             cases_to_process = ["start new list"]
-
         elif (last_transaction_id is not None) and last_transaction_id != transaction_id:
             cases_to_process = ["close last list",  "end transaction", "add current item to list"]
 
@@ -918,6 +926,14 @@ def build_dict_based_on_transaction_id_query(rs, fields_of_interest, transaction
                 except ValueError:
                     print("Invalid date: '%s'" % r[field])
                     single_dict[field] = None
+            elif r[field].__class__ == datetime.date:
+                try:
+                    single_dict[field] = r[field].strftime("%Y-%m-%d %H:%M")
+                except ValueError:
+                    print("Invalid date: '%s'" % r[field])
+                    single_dict[field] = None
+            elif r[field].__class__ == decimal.Decimal:
+                single_dict[field] = r[field]
             else:
                 single_dict[field] = r[field]
 
@@ -1000,7 +1016,14 @@ def main(configuration):
 
     data_directory = runtime_config["json_file_config"]["data_directory"]
     base_file_name = runtime_config["json_file_config"]["base_file_name"]
-    schema = main_config["schema"]
+
+    if "schema" in main_config:
+        schema = main_config["schema"]
+    else:
+        if "schema" in configuration["runtime_config"]["source_db_config"]:
+            schema = configuration["runtime_config"]["source_db_config"]["schema"]
+        else:
+            schema = None
 
     engine = sa.create_engine(connection_string)
     print("Connecting to database")

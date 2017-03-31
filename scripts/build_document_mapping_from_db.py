@@ -1,6 +1,13 @@
 import argparse
+import sys
+import os
 
-from prediction_matrix_generate.db_document import main_json
+try:
+    from prediction_matrix_generate.db_document import main_json
+except ImportError:
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.split(__file__)[0], os.path.pardir)))
+    from prediction_matrix_generate.db_document import main_json
+
 
 if __name__ == "__main__":
 
