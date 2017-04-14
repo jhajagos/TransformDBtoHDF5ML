@@ -1,5 +1,12 @@
-from prediction_matrix_generate.document_hdf5 import main
+import sys
+import os
 import argparse
+
+try:
+    from prediction_matrix_generate.document_hdf5 import main
+except ImportError:
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.split(__file__)[0], os.path.pardir)))
+    from prediction_matrix_generate.document_hdf5 import main
 
 if __name__ == "__main__":
 
