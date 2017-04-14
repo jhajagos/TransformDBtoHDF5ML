@@ -261,7 +261,8 @@ A JSON document can be mapped multiple ways.
            "cell_value": "admit_date",
            "type": "datetime"
          }
-     ]
+     ],
+     "type": "variables"
    }  
 ]
 ```
@@ -308,6 +309,10 @@ of categorical variables.
 }
 ```
 
+The following are also supported processes: `"process": "occurs_in_list"`,
+`"process": "occurs_n_times_in_list"`.
+
+
 ### Mapping a numeric list
 
 Only a single value can be stored in a 2-dimensional matrix.
@@ -327,7 +332,9 @@ Only a single value can be stored in a 2-dimensional matrix.
 }
 ```
 
-```"process": "count"```, ```"process": "median"```, ```"process": "last_item"```, ```"process": "first_item"```  
+The following processes are supported:
+```"process": "count"```, ```"process": "median"```, ```"process": "last_item"```, 
+```"process": "first_item"```.  
 
 
 ### Mapping a categorical list
