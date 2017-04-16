@@ -332,10 +332,9 @@ Only a single value can be stored in a 2-dimensional matrix.
 }
 ```
 
-The following processes are supported:
-```"process": "count"```, ```"process": "median"```, ```"process": "last_item"```, 
-```"process": "first_item"```.  
-
+The following process types are supported for numeric lists:
+`"process": "count"`, `"process": "median"`, `"process": "last_item"`, 
+`"process": "first_item"`, `"process": "min"`, and `"process": "max"`.  
 
 ### Mapping a categorical list
 

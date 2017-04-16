@@ -54,13 +54,13 @@ class RunHDF5Mapping(unittest.TestCase):
         self.assertEquals(dca.shape, (2, 5))
 
         dcac = f5["/independent/classes/discharge/column_annotations"][...]
-        self.assertEquals(dcac.shape, (3, 5))
+        self.assertEquals(dcac.shape, (4, 5))
 
         lab_count = f5["/independent/classes/lab/count/core_array"][...]
         lab_count_c = f5["/independent/classes/lab/count/column_annotations"][...]
 
         self.assertEqual(lab_count.tolist(), [[4.,  0.], [4.,  1.]])
-        self.assertEqual(lab_count_c.tolist(), [['BUN', 'Troponin'], ['value', 'value'], ['count', 'count']])
+        self.assertEqual(lab_count_c.tolist(), [['BUN', 'Troponin'], ['value', 'value'], ['', ''], ['count', 'count']])
 
         lab_category_count = f5["/independent/classes/lab/category/core_array"][...]
         lab_category_count_c = f5["/independent/classes/lab/category/column_annotations"][...]
@@ -68,7 +68,9 @@ class RunHDF5Mapping(unittest.TestCase):
         self.assertEqual(lab_category_count.tolist(), [[4.,  0.,  0.,  0.], [ 1.,  1.,  2.,  1.]])
         self.assertEqual(lab_category_count_c.tolist(), [['BUN', 'BUN', 'BUN', 'Troponin'],
                                                          ['high', 'low', 'normal', 'extreme'],
-                                                         ['', '', '', '']])
+                                                         ['', '', '', ''],
+                                                         ['categorical_list', 'categorical_list', 'categorical_list', 'categorical_list']
+                                                         ])
 
         self.assertEquals(np.sum(lab_category_count), np.sum(lab_count), "Sums should be equal")
 
