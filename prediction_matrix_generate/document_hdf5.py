@@ -134,6 +134,7 @@ def generate_column_annotations_variables(variables_dict, column_annotations):
                 column_annotations[3, offset_start] = variable_dict["process"]
             else:
                 column_annotations[0, offset_start] = field_name
+                column_annotations[3, offset_start] = variable_type
 
     return column_annotations
 
