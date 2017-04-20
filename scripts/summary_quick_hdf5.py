@@ -1,8 +1,16 @@
 """Exports as CSV file for each field and path which list the number of
 non zero elements, the fraction that are non-zero
 """
+import os
+import sys
 
-from prediction_matrix_generate.utility_functions import get_all_paths
+try:
+    from prediction_matrix_generate.utility_functions import get_all_paths
+except ImportError:
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.split(__file__)[0], os.path.pardir)))
+    from prediction_matrix_generate.utility_functions import get_all_paths
+
+
 import csv
 import h5py
 import numpy as np
