@@ -39,7 +39,8 @@ def main(hdf5_filename, csv_file_name=None, threshold_value_to_include=0.01,
 
         with open(csv_file_name, "wb") as fw:
             csv_writer = csv.writer(fw)
-            header = ["path", "c1", "c2", "c3", "c4", "non-zero", "to_include", "fraction non-zero", "unique", "fraction_unique"]
+            header = ["path", "c1", "c2", "c3", "c4", "non-zero", "to_include", "fraction non-zero", "unique",
+                      "fraction_unique"]
             csv_writer.writerow(header)
             for stripped_path in stripped_paths:
                 print(stripped_path)
