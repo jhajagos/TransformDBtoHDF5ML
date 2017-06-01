@@ -206,24 +206,35 @@ def find_column_indices(column_annotations, items_to_find):
 
 
 def main_subset(hdf5_file_name, hdf5_file_name_to_write_to, queries_to_select_list=None, columns_to_include_list=None,
-                compact_columns=None):
+                rows_to_include=None):
 
     fp5 = h5py.File(hdf5_file_name, "r")
+
 
     if columns_to_include_list:
         column_path_dict = find_multiple_column_indices_hdf5(fp5, columns_to_include_list)
     else:
         column_path_dict = None
 
+
     if queries_to_select_list is not None:
         row_array = query_rows_hdf5(fp5, queries_to_select_list)
-        print(row_array)
     else:
-        for path in column_path_dict:
-            n_rows = fp5[path + "/core_array/"][:, 0].shape[0]
-            break
 
-        row_array = (np.arange(0, n_rows),)
+        if rows_to_include is not None:
+
+            if rows_to_include.__class__ == [].__class__:
+                rows_to_include = (np.array(rows_to_include),)
+
+            row_array = rows_to_include
+
+        else:
+
+            for path in column_path_dict:
+                n_rows = fp5[path + "/core_array/"][:, 0].shape[0]
+                break
+
+            row_array = (np.arange(0, n_rows),)
 
     wfp5 = h5py.File(hdf5_file_name_to_write_to, "w")
 
