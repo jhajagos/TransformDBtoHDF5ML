@@ -50,6 +50,5 @@ if __name__ == "__main__":
 
     arg_obj = argparse_obj.parse_args()
 
-
     main(arg_obj.in_hdf5_filename, arg_obj.out_hdf5_filename, arg_obj.row_selection_json_filename, arg_obj.column_selection_json_filename)
 

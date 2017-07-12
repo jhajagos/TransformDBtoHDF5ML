@@ -372,6 +372,7 @@ The following process types are supported for numeric lists:
 
 ### Filter criteria
 
+Filtering by a single value:
 ```json
 {
     "path": ["independent", "classes", "lab"],
@@ -384,6 +385,23 @@ The following process types are supported for numeric lists:
             "type": "categorical_list",
             "cell_value": "result_category",
             "filter": {"field": "day", "value": 1}
+        }
+}
+```
+
+Filtering by multiple values:
+```json
+{
+    "path": ["independent", "classes", "lab"],
+    "export_path": ["independent", "classes", "lab", "first_days", "category"],
+    "type": "classes_templates",
+    "class_type": "variables",
+    "class_template":
+        {
+            "process": "count_categories",
+            "type": "categorical_list",
+            "cell_value": "result_category",
+            "filter": {"field": "day", "value": [0,1, 2]}
         }
 }
 ```

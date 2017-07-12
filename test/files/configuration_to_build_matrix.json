@@ -106,6 +106,32 @@
                 "filter": {"field": "day", "value": 1}
             }
     },
+    {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "first_days", "category"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "count_categories",
+                "type": "categorical_list",
+                "cell_value": "result_category",
+                "filter": {"field": "day", "value": [0,1,2]}
+            }
+     },
+     {
+        "path": ["independent", "classes", "lab"],
+        "export_path": ["independent", "classes", "lab", "first_days"],
+        "type": "classes_templates",
+        "class_type": "variables",
+        "class_template":
+            {
+                "process": "first_item",
+                "type": "numeric_list",
+                "cell_value": "value",
+                "filter": {"field": "day", "value": [0, 1]}
+            }
+     },
      {
         "path": ["independent", "classes", "lab"],
         "export_path": ["independent", "classes", "lab", "first"],

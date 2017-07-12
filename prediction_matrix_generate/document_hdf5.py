@@ -14,16 +14,26 @@ from utility_functions import data_dict_load
 
 
 def filter_list_of_interest(list_to_filter, filter_to_apply):
-    """Filter an embedded list with a simple value check {"field": "sequence_id", "value": 1}"""
+    """Filter an embedded list with a simple value check
+        {"field": "sequence_id", "value": 1}"""
     new_filtered_list = []
     filter_field = filter_to_apply["field"]
     value_to_filter_on = filter_to_apply["value"]
 
+    if value_to_filter_on.__class__ == [].__class__:
+        filter_type = "list"
+    else:
+        filter_type = "single_item"
+
     for item in list_to_filter:
         if filter_field in item:
             value_of_item = item[filter_field]
-            if value_to_filter_on == value_of_item:
-                new_filtered_list += [item]
+            if filter_type == "single_item":
+                if value_to_filter_on == value_of_item:
+                    new_filtered_list += [item]
+            else:
+                if value_of_item in value_to_filter_on: # list
+                    new_filtered_list += [item]
     return new_filtered_list
 
 
