@@ -1013,7 +1013,7 @@ def main(configuration):
     data_directory = runtime_config["json_file_config"]["data_directory"]
     base_file_name = runtime_config["json_file_config"]["base_file_name"]
 
-    if "schema" in main_config:
+    if "schema" in main_config: # Over-write schema
         schema = main_config["schema"]
     else:
         if "schema" in configuration["runtime_config"]["source_db_config"]:
@@ -1021,9 +1021,8 @@ def main(configuration):
         else:
             schema = None
 
-    if "where_criteria" in main_config:
+    if "where_criteria" in main_config and main_config["where_criteria"] is not None:
         where_criteria = main_config["where_criteria"]
-
     else:
         if "where_criteria" in configuration["runtime_config"]["source_db_config"]:
             where_criteria = configuration["runtime_config"]["source_db_config"]["where_criteria"]
