@@ -693,7 +693,7 @@ def combine_exported_hdf5_files_into_single_file(h5p_master, hdf5_files, total_r
             core_array_path_position[core_array_path] = new_starting_position
 
 
-def main(hdf5_base_name, batch_json_file_name, data_template_json, refresh_template=True, output_directory=None):
+def main(hdf5_base_name, batch_json_file_name, data_template_json, output_directory=None):
     """Convert a JSON file to a HDF5 matrix format using a template"""
 
     with open(batch_json_file_name) as fj:  # Load names of files to process
@@ -726,7 +726,8 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, refresh_templ
         data_template_dict = expand_template_dict(data_dict, data_template_dict)
         data_translate_dict = build_translation_dict(data_dict, data_template_dict)
         data_translate_dict = add_offsets_to_translation_dict(data_translate_dict)
-        data_translate_dict_json_name = os.path.join(output_directory, hdf5_base_name + "_" + str(batch_number) + "_data_template.json")
+        data_translate_dict_json_name = os.path.join(output_directory, hdf5_base_name + "_" + str(batch_number) +
+                                                     "_data_template.json")
 
         generated_data_templates_names += [data_translate_dict_json_name]
 
@@ -978,14 +979,9 @@ def main_json(mapping_json_name, run_time_json_name):
     return main(configuration)
 
 
-
 def main(configuration):
     """
-
-    :param configuration:
-    :return: None
-
-    Writes out a file
+        Writes out a file
     """
 
     # TODO: Generate JSON file which outputs which files are included in a batch
@@ -1025,6 +1021,15 @@ def main(configuration):
         else:
             schema = None
 
+    if "where_criteria" in main_config:
+        where_criteria = main_config["where_criteria"]
+
+    else:
+        if "where_criteria" in configuration["runtime_config"]["source_db_config"]:
+            where_criteria = configuration["runtime_config"]["source_db_config"]["where_criteria"]
+        else:
+            where_criteria = None
+
     engine = sa.create_engine(connection_string)
     print("Connecting to database")
     connection = engine.connect()
@@ -1038,8 +1043,8 @@ def main(configuration):
 
     main_transaction_query = 'select * from %s' % main_transaction_table
 
-    if "where_criteria" in main_config and main_config["where_criteria"] is not None:
-        main_transaction_query += " where %s" % main_config["where_criteria"]
+    if where_criteria is not None:
+        main_transaction_query += " where %s" % where_criteria
 
     if "fields_to_order_by" in main_config and main_config["fields_to_order_by"] is not None:
         main_transaction_query += " order by"
