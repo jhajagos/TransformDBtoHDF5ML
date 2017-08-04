@@ -756,8 +756,11 @@ def combine_exported_hdf5_files_into_single_file(h5p_master, hdf5_files, total_r
             core_array_path_position[core_array_path] = new_starting_position
 
 
-def main(hdf5_base_name, batch_json_file_name, data_template_json, refresh_template=True, output_directory=None):
+def main(hdf5_base_name, batch_json_file_name, data_template_json, output_directory=None):
     """Convert a JSON file to a HDF5 matrix format using a template"""
+
+    if data_template_json.__class__ != [].__class__:
+        data_template_json = [data_template_json]
 
     with open(batch_json_file_name) as fj:  # Load names of files to process
         batch_list_dict = json.load(fj)
@@ -783,11 +786,14 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, refresh_templ
 
         data_dict = data_dict_load(data_json_file)
 
-        with open(data_template_json, "r") as f:
-            data_template_dict = json.load(f)
 
-        data_template_dict = expand_template_dict(data_dict, data_template_dict)
-        data_translate_dict = build_translation_dict(data_dict, data_template_dict)
+        data_template_list = []
+        for json_filename in data_template_json:
+            with open(json_filename, "r") as f:
+                data_template_list += json.load(f)
+
+        data_template_list = expand_template_dict(data_dict, data_template_list)
+        data_translate_dict = build_translation_dict(data_dict, data_template_list)
         data_translate_dict = add_offsets_to_translation_dict(data_translate_dict)
         data_translate_dict_json_name = os.path.join(output_directory, hdf5_base_name + "_" + str(batch_number) + "_data_template.json")
 
