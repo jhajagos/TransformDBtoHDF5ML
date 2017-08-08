@@ -968,8 +968,22 @@ def execute_and_print(connection, query):
 
 
 def main_json(mapping_json_name, run_time_json_name):
-    with open(mapping_json_name, "r") as f:
+
+    if mapping_json_name.__class__ != [].__class__:
+        primary_mapping_json_name = mapping_json_name
+        additional_mappings = []
+    else:
+        primary_mapping_json_name = mapping_json_name[0]
+        additional_mappings = mapping_json_name[1:]
+
+
+    with open(primary_mapping_json_name, "r") as f:
         mapping_configuration = json.load(f)
+
+    for additional_mapping in additional_mappings:  # Allow mappings to be split accros multiple files
+
+        with open(additional_mapping) as f:
+            mapping_configuration["mappings"] += json.load(f)
 
     with open(run_time_json_name, "r") as f:
         runtime_configuration = json.load(f)
