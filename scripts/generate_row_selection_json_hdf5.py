@@ -37,7 +37,7 @@ def main(hdf5_filename, query_json_filename, output_json_filename):
 
 
 if __name__ == "__main__":
-    argparse_obj = argparse.ArgumentParser()
+    argparse_obj = argparse.ArgumentParser(help="Generate a JSON file that specifies which to filter from an HDF5 file container")
 
     argparse_obj.add_argument("-f", "--hdf5-filename", help="HDF5 file name for post processing", dest="hdf5_filename")
 

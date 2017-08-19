@@ -9,8 +9,6 @@ except ImportError:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.split(__file__)[0], os.path.pardir)))
     from prediction_matrix_generate.utility_functions import get_all_paths
 
-
-
 import argparse
 
 
@@ -35,16 +33,17 @@ def main(hdf5_file_name, paths=None):
     i = 0
     for path in annotations_paths:
         annotations = hf5p[path][...]
-        nrows, ncolumns = annotations.shape
-        for j in range(ncolumns):
+        n_rows, n_columns = annotations.shape
+        for j in range(n_columns):
             field_name = ""
-            for k in range(nrows):
+            for k in range(n_rows):
                 if len(annotations[k,j].strip()) > 0:
                     temp_string = annotations[k,j] + "."
                     field_name += temp_string
             field_name = field_name[:-1]
             annotations_list += [{"path": core_array_paths[i], "index": j, "field_name": field_name}]
         i += 1
+
     import pprint
     pprint.pprint(annotations_list)
     header = [ca["field_name"] for ca in annotations_list]
@@ -67,7 +66,7 @@ def main(hdf5_file_name, paths=None):
 
 
 if __name__ == "__main__":
-    argparse_obj = argparse.ArgumentParser()
+    argparse_obj = argparse.ArgumentParser(help="Export HDF5 matrices to CSV file")
     argparse_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename")
 
     arg_obj = argparse_obj.parse_args()

@@ -60,7 +60,7 @@ def main(csv_filename, criteria_field="to_include"):
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser()
+    argparse_obj = argparse.ArgumentParser(help="Generate a JSON file that specifies which fields to filter from an HDF5 file container.")
     argparse_obj.add_argument("-f", "--csv-filename", dest="csv_filename",
                               help="CSV filename to read to determine which fields to filter")
     argparse_obj.add_argument("-c", "--column-name", dest="column_name", default="to_include",

@@ -29,12 +29,13 @@ def main(hdf5_file_to_read, hdf5_file_to_write, json_population_selection, json_
     else:
         population_selection = None
 
-    main_subset(hdf5_file_to_read, hdf5_file_to_write, columns_to_include_list=field_selection, rows_to_include=population_selection)
+    main_subset(hdf5_file_to_read, hdf5_file_to_write, columns_to_include_list=field_selection,
+                rows_to_include=population_selection)
 
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser()
+    argparse_obj = argparse.ArgumentParser(help="Utility program for subsetting rows and columns of a mapped HDF5 container")
     argparse_obj.add_argument("-f", "--in-hdf5-filename",  help="HDF5 file to read and make compact",
                               dest="in_hdf5_filename")
     argparse_obj.add_argument("-o", "--out-hdf5-filename", help="HDF5 file to read and make compact",
@@ -50,5 +51,6 @@ if __name__ == "__main__":
 
     arg_obj = argparse_obj.parse_args()
 
-    main(arg_obj.in_hdf5_filename, arg_obj.out_hdf5_filename, arg_obj.row_selection_json_filename, arg_obj.column_selection_json_filename)
+    main(arg_obj.in_hdf5_filename, arg_obj.out_hdf5_filename, arg_obj.row_selection_json_filename,
+         arg_obj.column_selection_json_filename)
 

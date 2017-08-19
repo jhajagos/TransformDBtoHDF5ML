@@ -79,6 +79,7 @@ if __name__ == "__main__":
     argparse_obj.add_argument("-m", "--mark-frequency-by-fraction", dest="threshold_value_to_include", default=0.01, type=float,
                               help="Mark records that occur at a fraction of at least between 0 and 1")
 
+    #TODO: Add suppport for a spcecific column name
     argparse_obj.add_argument("-u", "--unique-count-field-path", dest="unique_count_field_path", default=None)
 
     arg_obj = argparse_obj.parse_args()

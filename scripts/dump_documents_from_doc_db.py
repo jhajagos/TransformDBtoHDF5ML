@@ -10,7 +10,7 @@ import argparse
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser()
+    argparse_obj = argparse.ArgumentParser(help="Extract documents from a document database for mapping to HDF5")
     argparse_obj.add_argument("-q", "--query-json-filename", dest="query_json_filename")
     argparse_obj.add_argument("-n", "--batch-file-size", dest="batch_file_size", default=5000, type=int)
     argparse_obj.add_argument("-d", "--directory", dest="base_directory", default="./")

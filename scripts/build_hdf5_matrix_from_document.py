@@ -10,11 +10,13 @@ except ImportError:
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser()
-    argparse_obj.add_argument("-a", "--base-filename-prefix", dest="base_filename", help="Prefix to add to the filename")
+    argparse_obj = argparse.ArgumentParser(help="A tool for mapping JSON documents to matrices in a HDF5 container")
+    argparse_obj.add_argument("-a", "--base-filename-prefix", dest="base_filename",
+                              help="Prefix for generated filenames")
     argparse_obj.add_argument("-c", "--data-template-json-filename", dest="data_template_json_filenames",
-                              help="Either a single or multiple JSON files which have mapping information", nargs="+")
-    argparse_obj.add_argument("-b", "--batch-json-filename", dest="batch_json_filename", help="")
+                              help="Either a single or multiple JSON files which contain mapping details", nargs="+")
+    argparse_obj.add_argument("-b", "--batch-json-filename", dest="batch_json_filename",
+                              help="JSON file which has")
 
     arg_obj = argparse_obj.parse_args()
     main(arg_obj.base_filename, arg_obj.batch_json_filename, arg_obj.data_template_json_filenames)
