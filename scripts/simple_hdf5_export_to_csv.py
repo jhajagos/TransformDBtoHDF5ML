@@ -66,7 +66,7 @@ def main(hdf5_file_name, paths=None):
 
 
 if __name__ == "__main__":
-    argparse_obj = argparse.ArgumentParser(help="Export HDF5 matrices to CSV file")
+    argparse_obj = argparse.ArgumentParser(description="Export HDF5 matrices to CSV file")
     argparse_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename")
 
     arg_obj = argparse_obj.parse_args()

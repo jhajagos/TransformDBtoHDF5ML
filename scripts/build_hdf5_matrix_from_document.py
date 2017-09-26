@@ -10,7 +10,7 @@ except ImportError:
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser(help="A tool for mapping JSON documents to matrices in a HDF5 container")
+    argparse_obj = argparse.ArgumentParser(description="A tool for mapping JSON documents to matrices in a HDF5 container")
     argparse_obj.add_argument("-a", "--base-filename-prefix", dest="base_filename",
                               help="Prefix for generated filenames")
     argparse_obj.add_argument("-c", "--data-template-json-filename", dest="data_template_json_filenames",

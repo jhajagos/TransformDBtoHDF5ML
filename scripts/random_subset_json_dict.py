@@ -37,7 +37,7 @@ def main(json_dict_file_name, n_samples):
 
 if __name__ == "__main__":
 
-    argparser_obj = argparse.ArgumentParser(help="Generate a random subset of a JSON document. Useful for testing the mapping process")
+    argparser_obj = argparse.ArgumentParser(description="Generate a random subset of a JSON document. Useful for testing the mapping process")
     argparser_obj.add_argument("-f", "--json-filename", dest="json_filename", help="JSON file that is a keyed dictionary to sample from")
     argparser_obj.add_argument("-n", "--n-samples", dest="n_samples", type=int, help="Number of random samples to take from the larger JSON file")
 

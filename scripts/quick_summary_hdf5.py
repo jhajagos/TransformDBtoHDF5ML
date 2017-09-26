@@ -73,7 +73,7 @@ def main(hdf5_filename, csv_file_name=None, threshold_value_to_include=0.01,
 
 
 if __name__ == "__main__":
-    argparse_obj = argparse.ArgumentParser()
+    argparse_obj = argparse.ArgumentParser(description="Provides counts for variables in a mapped HDF5 file")
 
     argparse_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename", help="HDF5 file to summarize")
     argparse_obj.add_argument("-m", "--mark-frequency-by-fraction", dest="threshold_value_to_include", default=0.01, type=float,

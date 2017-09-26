@@ -83,7 +83,7 @@ def main(file_name):
 
 
 if __name__ == "__main__":
-    argparse_obj = argparse.ArgumentParser(help="Recode coded dummy variables in a CSV file")
+    argparse_obj = argparse.ArgumentParser(description="Recode coded dummy variables in a CSV file")
     argparse_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename")
 
     arg_obj = argparse_obj.parse_args()

@@ -34,7 +34,7 @@ def main(hdf5_file_name, csv_file_with_links, add_map=1):
 
 if __name__ == "__main__":
 
-    arg_parser_obj = argparse.ArgumentParser(help="Add links to a HDF5 container. Helpful to support other programs")
+    arg_parser_obj = argparse.ArgumentParser(description="Add links to a HDF5 container helpful if structure of the file has been refactoried")
 
     arg_parser_obj.add_argument("-f", "--hdf5-filename", dest="hdf5_filename", help="HDF5 file which to add links to")
     arg_parser_obj.add_argument("-c", "--csv-filename", dest="csv_filename",

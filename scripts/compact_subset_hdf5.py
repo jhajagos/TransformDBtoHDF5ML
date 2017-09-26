@@ -35,7 +35,7 @@ def main(hdf5_file_to_read, hdf5_file_to_write, json_population_selection, json_
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser(help="Utility program for subsetting rows and columns of a mapped HDF5 container")
+    argparse_obj = argparse.ArgumentParser(description="Utility program for subsetting rows and columns of a mapped HDF5 container")
     argparse_obj.add_argument("-f", "--in-hdf5-filename",  help="HDF5 file to read and make compact",
                               dest="in_hdf5_filename")
     argparse_obj.add_argument("-o", "--out-hdf5-filename", help="HDF5 file to read and make compact",

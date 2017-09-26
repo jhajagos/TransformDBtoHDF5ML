@@ -11,7 +11,7 @@ except ImportError:
 
 if __name__ == "__main__":
 
-    argparse_obj = argparse.ArgumentParser(help="A tool to map relational database tables to JSON documents")
+    argparse_obj = argparse.ArgumentParser(description="A tool to map relational database tables to JSON documents")
 
     argparse_obj.add_argument("-c", "--db-map-json", dest="db_map_json_filename",
                               nargs="+",

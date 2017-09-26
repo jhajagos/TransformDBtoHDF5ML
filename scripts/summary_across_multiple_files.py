@@ -46,7 +46,7 @@ def main(starting_directory):
                                 csv_writer.writerow(row_to_write)
 
 if __name__ == "__main__":
-    argparse_obj = argparse.ArgumentParser(help="Generate summary statistics across multiple HDF5 container files")
+    argparse_obj = argparse.ArgumentParser(description="Generate summary statistics across multiple HDF5 container files")
     argparse_obj.add_argument("-d", "--directory", dest="directory",
                               help="Starting directory to recurse through and compute basic statistics on.")
 
