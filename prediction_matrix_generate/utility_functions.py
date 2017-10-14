@@ -210,12 +210,10 @@ def main_subset(hdf5_file_name, hdf5_file_name_to_write_to, queries_to_select_li
 
     fp5 = h5py.File(hdf5_file_name, "r")
 
-
     if columns_to_include_list:
         column_path_dict = find_multiple_column_indices_hdf5(fp5, columns_to_include_list)
     else:
         column_path_dict = None
-
 
     if queries_to_select_list is not None:
         row_array = query_rows_hdf5(fp5, queries_to_select_list)
