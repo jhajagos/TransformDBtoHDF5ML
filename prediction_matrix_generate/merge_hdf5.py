@@ -20,12 +20,12 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
     for i in range(identifier_2.shape[0]):
         position_dict_2[identifier_2[i]] = i
 
-    print(linking_list)
-    print(identifier_1)
-    print(identifier_2)
-
-    print(position_dict_1)
-    print(position_dict_2)
+    # print(linking_list)
+    # print(identifier_1)
+    # print(identifier_2)
+    #
+    # print(position_dict_1)
+    # print(position_dict_2)
 
     # Sort linking list to correspond to order in matrix
     linking_list_to_sort = []
@@ -48,7 +48,7 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
 
     linking_list_to_sort.sort(key=lambda x: x[0])
 
-    print(linking_list_to_sort)
+    #print(linking_list_to_sort)
     i = 0
     new_linking_list_to_sort = []
     for link_tuple in linking_list_to_sort:
@@ -61,7 +61,7 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
     for i in range(new_number_of_rows):
         left_row_copy_array[i, :] = np.array([new_linking_list_to_sort[i][1], new_linking_list_to_sort[i][0]])
 
-    print(left_row_copy_array)
+    #print(left_row_copy_array)
     n_nones = 0
     for i in range(new_number_of_rows):
         if new_linking_list_to_sort[i][3] is None:
@@ -71,7 +71,7 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
 
     right_i = 0
     for i in range(new_number_of_rows):
-        print(new_linking_list_to_sort[i])
+        #print(new_linking_list_to_sort[i])
 
         right_id_pos = new_linking_list_to_sort[i][3]
         left_id_pos = new_linking_list_to_sort[i][0]
@@ -83,7 +83,7 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
     p1_paths = get_all_paths(f5_p1["/"])
     for p1_path in p1_paths:
         path_to_write_1 = path_name_prefix_1 + p1_path
-        print(path_to_write_1, p1_path)
+        #print(path_to_write_1, p1_path)
         ds_c = f5_p1[p1_path]
         if p1_path[-1 * len("core_array"):] == "core_array":
            copy_numeric_rows_from_path(f5_p1, p1_path, f5_w, path_to_write_1, left_row_copy_array)

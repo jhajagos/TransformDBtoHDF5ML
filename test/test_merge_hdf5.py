@@ -3,6 +3,7 @@ import h5py
 import numpy as np
 import os
 from prediction_matrix_generate.merge_hdf5 import merge_f_pointer_hdf5
+from prediction_matrix_generate.utility_functions import get_all_paths
 
 
 class TestMergeHDF5(unittest.TestCase):
@@ -76,7 +77,40 @@ class TestMergeHDF5(unittest.TestCase):
         merge_f_pointer_hdf5(f51, f52, w5p2, "/x/identifier/core_array", "/identifier/core_array", 0, 1,
                              self.linking_list, path_name_prefix_1="/left", path_name_prefix_2="/right")
 
-        self.assertEqual(True, False)
+        w5p2.close()
+
+        with h5py.File(write_hdf5_file_path, "r") as f5j:
+            all_paths = get_all_paths(f5j["/"])
+
+            self.assertTrue(len(all_paths))
+
+            column_annotations_1 = f51["/d1/data/column_annotations"][...]
+            column_annotations_2 = f5j["/left/d1/data/column_annotations"][...]
+
+            self.assertEquals(column_annotations_1.tolist(), column_annotations_2.tolist())
+
+            core_array_1 = f51["/d1/data/core_array"][...]
+            core_array_2 = f5j["/left/d1/data/core_array"][...]
+
+            self.assertEquals(5, core_array_2.shape[0])
+
+            self.assertEquals(core_array_1.tolist()[0], core_array_2.tolist()[0])
+
+            self.assertNotEquals(core_array_1.tolist()[3], core_array_2.tolist()[3])
+
+            column_annotations_3 = f52["/d2/data/column_annotations"][...]
+            column_annotations_4 = f5j["/right/d2/data/column_annotations"][...]
+
+            self.assertEquals(column_annotations_3.tolist(), column_annotations_4.tolist())
+
+            core_array_3 = f52["/d2/data/core_array"][...]
+            core_array_4 = f5j["/right/d2/data/core_array"][...]
+
+            self.assertEquals(core_array_3.tolist()[0], core_array_4.tolist()[4])
+
+            self.assertEquals([0.0, 0.0, 0.0], core_array_4[1].tolist())
+
+
 
 
 if __name__ == '__main__':
