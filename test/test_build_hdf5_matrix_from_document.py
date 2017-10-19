@@ -5,7 +5,7 @@ import os
 import unittest
 import h5py
 import numpy as np
-import document_hdf5
+from prediction_matrix_generate import document_hdf5
 
 
 class RunHDF5Mapping(unittest.TestCase):

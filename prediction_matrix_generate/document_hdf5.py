@@ -58,7 +58,7 @@ def generate_column_annotations_categorical_list(categorical_list_dict, column_a
     """Generate column annotations when it is a column list"""
     position_map = categorical_list_dict["position_map"]
     name = categorical_list_dict["name"]
-    descriptions = categorical_list_dict["descriptions"]
+    descriptions = categorical_list_dict["description"]
 
     position_map_reverse = {}
     for k in position_map:
@@ -107,7 +107,7 @@ def generate_column_annotations_variables(variables_dict, column_annotations):
                 else:
                     field_value = variable_dict["name"]
 
-                descriptions = variable_dict["descriptions"]
+                descriptions = variable_dict["description"]
 
                 if variable_type == "categorical":
                     if value in descriptions:
@@ -129,8 +129,8 @@ def generate_column_annotations_variables(variables_dict, column_annotations):
 
             if variable_type == "numeric_list":
                 variable_name = variable_dict["name"]
-                if "descriptions" in variable_dict:
-                    descriptions = variable_dict["descriptions"]
+                if "description" in variable_dict:
+                    descriptions = variable_dict["description"]
                     if variable_name in descriptions:
                         description = descriptions[variable_name]
                     else:
@@ -251,9 +251,11 @@ def build_translation_dict(data_dict, template_list_dict):
                                 else:
                                     item_dict[value_of_interest] = 1
                                     if "description" in variable_dict:
-                                        description_dict[value_of_interest] = dict_of_interest[variable_dict["description"]]
+                                        if variable_dict["description"] in dict_of_interest:
+                                            description_dict[value_of_interest] = dict_of_interest[variable_dict["description"]]
                                     if "label" in variable_dict:
-                                        label_dict[value_of_interest] = dict_of_interest[variable_dict["label"]]
+                                        if variable_dict["label"] in dict_of_interest:
+                                            label_dict[value_of_interest] = dict_of_interest[variable_dict["label"]]
 
                     data_keys = item_dict.keys()
                     data_keys.sort()
@@ -263,7 +265,7 @@ def build_translation_dict(data_dict, template_list_dict):
                         position_map[data_keys[i]] = i
                     variable_dict["position_map"] = position_map
                     variable_dict["labels"] = label_dict
-                    variable_dict["descriptions"] = description_dict
+                    variable_dict["description"] = description_dict
                     variable_dict["n_categories"] = len(position_map.keys())
 
                 elif variable_type == "categorical_list":
@@ -301,7 +303,7 @@ def build_translation_dict(data_dict, template_list_dict):
                         position_map[data_keys[i]] = i
                     variable_dict["position_map"] = position_map
                     variable_dict["n_categories"] = len(position_map.keys())
-                    variable_dict["descriptions"] = description_dict
+                    variable_dict["description"] = description_dict
 
                 elif variable_type == "numeric_list":
                     description_dict = {}
@@ -320,7 +322,7 @@ def build_translation_dict(data_dict, template_list_dict):
                                     description = first_item[description_field]
                                     description_dict[variable_name] = description
 
-                    variable_dict["descriptions"] = description_dict
+                    variable_dict["description"] = description_dict
 
         elif template_type == "categorical_list":
 
@@ -355,7 +357,7 @@ def build_translation_dict(data_dict, template_list_dict):
 
             template_dict["position_map"] = position_map
             template_dict["labels"] = label_dict
-            template_dict["descriptions"] = description_dict
+            template_dict["description"] = description_dict
             template_dict["n_categories"] = len(position_map.keys())
 
     return template_list_dict

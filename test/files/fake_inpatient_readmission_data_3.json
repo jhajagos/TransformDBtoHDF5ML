@@ -26,6 +26,7 @@
                 {
                     "age": 50,
                     "gender": "M",
+                    "gender_description": "Male",
                     "emergency": "Y",
                     "admit_date": "2012-01-01",
                     "discharge_date": "2014-01-01"
@@ -90,6 +91,7 @@
                 },
                 "discharge": {
                     "age": 58,
+                    "gender_description": "Female",
                     "gender": "F",
                     "emergency": "N"
                 },

@@ -6,7 +6,8 @@
          },
          {
           "cell_value": "gender",
-          "type": "categorical"
+          "type": "categorical",
+           "description": "gender_description"
          },
          {
           "cell_value": "emergency",

@@ -32,6 +32,7 @@ def read_csv_filename_to_list(csv_file_name):
 
         return result_list
 
+
 if __name__ == "__main__":
     arg_parser_obj = argparse.ArgumentParser()
 
