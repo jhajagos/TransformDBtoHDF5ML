@@ -749,16 +749,15 @@ def combine_exported_hdf5_files_into_single_file(h5p_master, hdf5_files, total_r
 
         print("Inserting contents of '%s'" % hdf5_file_name)
 
-        h5pc = h5py.File(hdf5_file_name, "r")
+        with h5py.File(hdf5_file_name, "r") as h5pc:
 
-        for core_array_path in core_array_path_dict:
-            ds1 = core_array_path_dict[core_array_path]
+            for core_array_path in core_array_path_dict:
+                ds1 = core_array_path_dict[core_array_path]
+                new_starting_position = copy_into_data_set_starting_at(ds1, h5pc, core_array_path, core_array_path_position[core_array_path])
+                core_array_path_position[core_array_path] = new_starting_position
 
-            new_starting_position = copy_into_data_set_starting_at(ds1, h5pc, core_array_path, core_array_path_position[core_array_path])
-            core_array_path_position[core_array_path] = new_starting_position
 
-
-def main(hdf5_base_name, batch_json_file_name, data_template_json, output_directory=None):
+def main(hdf5_base_name, batch_json_file_name, data_template_json, output_directory=None, clean=True):
     """Convert a JSON file to a HDF5 matrix format using a template"""
 
     if data_template_json.__class__ != [].__class__:
@@ -787,7 +786,6 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, output_direct
         batch_number = batch_ids[ks]
 
         data_dict = data_dict_load(data_json_file)
-
 
         data_template_list = []
         for json_filename in data_template_json:
@@ -839,15 +837,15 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, output_direct
         hdf5_file_name = os.path.join(output_directory, hdf5_base_name + "_" + str(batch_number) + ".hdf5")
         generated_hdf5_file_names += [hdf5_file_name]
 
-        f5p = h5py.File(hdf5_file_name, "w")
-        if batch_number in sort_order_dict:
-            sort_order_json_name = sort_order_dict[batch_number]
-            with open(sort_order_json_name, "r") as fj:
-                sort_order_list = json.load(fj)
-        else:
-            sort_order_list = None
+        with h5py.File(hdf5_file_name, "w") as f5p:
+            if batch_number in sort_order_dict:
+                sort_order_json_name = sort_order_dict[batch_number]
+                with open(sort_order_json_name, "r") as fj:
+                    sort_order_list = json.load(fj)
+            else:
+                sort_order_list = None
 
-        build_hdf5_matrix(f5p, data_dict, master_data_translate_dict, sort_order_list)
+            build_hdf5_matrix(f5p, data_dict, master_data_translate_dict, sort_order_list)
 
         ks += 1
 
@@ -857,3 +855,10 @@ def main(hdf5_base_name, batch_json_file_name, data_template_json, output_direct
     combined_hdf5 = h5py.File(all_hdf5_file_name, "w")
 
     combine_exported_hdf5_files_into_single_file(combined_hdf5, generated_hdf5_file_names, total_number_of_rows)
+
+    if clean:
+        for hdf5_file_name in generated_hdf5_file_names:
+            os.remove(hdf5_file_name)
+
+        for data_template_name in generated_data_templates_names:
+            os.remove(data_template_name)
