@@ -3,12 +3,25 @@ import h5py
 import numpy as np
 
 
-def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_2, identifier_position_1,
+def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_position_1, identifier_path_2,
                          identifier_position_2, linking_list, join_outer=False, path_name_prefix_1="", path_name_prefix_2="",
                          chunk_size=1000):
 
+    print(identifier_path_1)
+    print(identifier_position_1)
+
+    print(identifier_path_2)
+    print(identifier_position_2)
+
     identifier_1 = f5_p1[identifier_path_1][:, identifier_position_1]
     identifier_2 = f5_p2[identifier_path_2][:, identifier_position_2]
+
+
+    identifier_1 = identifier_1.astype(np.int64)
+    identifier_2 = identifier_2.astype(np.int64)
+
+    print(identifier_1)
+    print(identifier_2)
 
     # Build dictionaries
     position_dict_1 = {}
@@ -24,8 +37,10 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
     # print(identifier_1)
     # print(identifier_2)
     #
-    # print(position_dict_1)
-    # print(position_dict_2)
+    #print(position_dict_1)
+    #print(position_dict_2)
+
+    print(linking_list[0:40])
 
     # Sort linking list to correspond to order in matrix
     linking_list_to_sort = []
@@ -83,7 +98,7 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
     p1_paths = get_all_paths(f5_p1["/"])
     for p1_path in p1_paths:
         path_to_write_1 = path_name_prefix_1 + p1_path
-        #print(path_to_write_1, p1_path)
+        print(p1_path, path_to_write_1)
         ds_c = f5_p1[p1_path]
         if p1_path[-1 * len("core_array"):] == "core_array":
            copy_numeric_rows_from_path(f5_p1, p1_path, f5_w, path_to_write_1, left_row_copy_array)
@@ -94,6 +109,7 @@ def merge_f_pointer_hdf5(f5_p1, f5_p2, f5_w, identifier_path_1, identifier_path_
     p2_paths = get_all_paths(f5_p2["/"])
     for p2_path in p2_paths:
         path_to_write_2 = path_name_prefix_2 + p2_path
+        print(p2_path, path_to_write_2)
         ds_c = f5_p2[p2_path]
         if p2_path[-1 * len("core_array"):] == "core_array":
             copy_numeric_rows_from_path(f5_p2, p2_path, f5_w, path_to_write_2, right_row_copy_array, number_of_rows=left_row_copy_array.shape[0])
