@@ -676,7 +676,7 @@ def merge_data_translate_dicts(data_translate_dict_1, data_translate_dict_2):
             return merged_data_translate_dict
 
         else:
-            raise RuntimeError, "Translations dictionaries are of different length"
+            raise(RuntimeError, "Translations dictionaries are of different length")
 
 
 def remap_position_map(variable_1, variable_2, new_variable, running_offset):

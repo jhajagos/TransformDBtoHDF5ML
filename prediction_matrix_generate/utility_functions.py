@@ -93,9 +93,9 @@ def query_rows_hdf5(h5p, queries):
             pass
         else:
             if len(column_indices):
-                raise RuntimeError, "The field '%s' should match only a single column" % field
+                raise(RuntimeError, "The field '%s' should match only a single column" % field)
             else:
-                raise RuntimeError, "The field '%s' did not match any column" % field
+                raise(RuntimeError, "The field '%s' did not match any column" % field)
 
         core_array_path = "/".join(path.split("/") + ["core_array"])
 
