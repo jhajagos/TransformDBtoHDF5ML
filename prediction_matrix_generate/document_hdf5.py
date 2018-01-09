@@ -396,6 +396,62 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
             core_array = np.zeros(shape=(data_items_count, offset_end))
             column_annotations = np.zeros(shape=(4, offset_end), dtype="S128")
 
+        if template_type in ("numeric_list"):
+            variable_dict = data_translate_dict
+            core_array = np.zeros(shape=(data_items_count, 1))
+            column_annotations = np.zeros(shape=(4, 1), dtype="S128")
+            offset_end = 1
+
+            print(variable_dict)
+            process = variable_dict["process"]
+            cell_value_field = variable_dict["cell_value"]
+            if "filter" in variable_dict:
+                filter_to_apply = variable_dict["filter"]
+            else:
+                filter_to_apply = None
+
+            i = 0
+            for data_key in data_sort_key_list:
+                datum_dict = data_dict[data_key]
+                dict_of_interest = get_entry_from_path(datum_dict, path)
+
+                if dict_of_interest is not None:
+
+                    list_of_interest = dict_of_interest
+                    if list_of_interest is not None:
+
+                        if filter_to_apply is not None:
+                            list_of_interest = filter_list_of_interest(list_of_interest, filter_to_apply)
+
+                        if len(list_of_interest):
+                            process_list = []
+                            counter = 0
+                            for item in list_of_interest:
+                                if cell_value_field in item:
+                                    cell_value = item[cell_value_field]
+                                    if cell_value is not None:
+                                        process_list += [cell_value]
+                                    counter += 1
+
+                            if len(process_list):
+                                process_array = np.array(process_list)
+                                if process == "median":
+                                    median_value = np.median(process_array)
+                                    core_array[i, 0] = median_value
+                                elif process == "min":
+                                    min_value = np.min(process_array)
+                                    core_array[i, 0] = min_value
+                                elif process == "max":
+                                    max_value = np.max(process_array)
+                                    core_array[i, 0] = max_value
+                                elif process == "last_item":
+                                    core_array[i, 0] = process_list[-1]
+                                elif process == "first_item":
+                                    core_array[i, 0] = process_list[0]
+                                elif process == "count":
+                                    core_array[i, 0] = counter  # Handles None values
+                i += 1
+
         if template_type == "variables":
 
             for variable_dict in data_translate_dict["variables"]:
@@ -541,7 +597,7 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
                         j += 1
                 i += 1
 
-        if template_type in ("variables", "categorical_list"):
+        if template_type in ("variables", "categorical_list", "numeric_list"):
 
             hdf5_core_array_path = "/" + hdf5_base_path + "/core_array/"
             hdf5_column_annotation_path = "/" + hdf5_base_path + "/column_annotations/"
@@ -568,6 +624,10 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
             elif template_type == "categorical_list":
                 column_annotations = generate_column_annotations_categorical_list(data_translate_dict, column_annotations)
+
+            elif template_type == "numeric_list":
+                column_annotations = [[str(cell_value_field)],[str(process)],[''], ['numeric_list']]
+                offset_end = 1
 
             print(column_annotations)
 
