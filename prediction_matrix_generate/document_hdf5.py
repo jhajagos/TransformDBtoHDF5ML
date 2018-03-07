@@ -398,13 +398,16 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
         if template_type in ("numeric_list"):
             variable_dict = data_translate_dict
+
             core_array = np.zeros(shape=(data_items_count, 1))
+
             column_annotations = np.zeros(shape=(4, 1), dtype="S128")
             offset_end = 1
 
             print(variable_dict)
             process = variable_dict["process"]
             cell_value_field = variable_dict["cell_value"]
+
             if "filter" in variable_dict:
                 filter_to_apply = variable_dict["filter"]
             else:
@@ -412,6 +415,10 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
             i = 0
             for data_key in data_sort_key_list:
+
+                if "process" != "count":
+                    core_array[i,0] = np.nan  # For numeric lists set to nan
+
                 datum_dict = data_dict[data_key]
                 dict_of_interest = get_entry_from_path(datum_dict, path)
 
@@ -438,6 +445,9 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
                                 if process == "median":
                                     median_value = np.median(process_array)
                                     core_array[i, 0] = median_value
+                                elif process == "mean":
+                                    mean_value = np.mean(process_list)
+                                    core_array[i, 0] = mean_value
                                 elif process == "min":
                                     min_value = np.min(process_array)
                                     core_array[i, 0] = min_value
@@ -494,9 +504,13 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
                         position_map = {}
 
                     for data_key in data_sort_key_list:
+
                         datum_dict = data_dict[data_key]
                         dict_of_interest = get_entry_from_path(datum_dict, path)
                         if dict_of_interest is not None:
+
+                            if process not in ("count", "count_categories"):
+                                core_array[i, offset_start] = np.nan  # For non null values
 
                             if (variable_name in dict_of_interest) or (dict_of_interest.__class__ == [].__class__): # An embedded list
                                 if dict_of_interest.__class__ == {}.__class__:
@@ -513,7 +527,8 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
                                         if variable_type == 'numeric_list':
 
-                                            if process in ("median", "count", "last_item", "first_item", "min", "max"):
+                                            if process in ("median", "mean", "count", "last_item", "first_item", "min", "max"):
+
                                                 process_list = []
                                                 counter = 0
                                                 for item in list_of_interest:
@@ -528,6 +543,9 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
                                                     if process == "median":
                                                         median_value = np.median(process_array)
                                                         core_array[i, offset_start] = median_value
+                                                    elif process == "mean":
+                                                        mean_value = np.mean(process_array)
+                                                        core_array[i, offset_start] = mean_value
                                                     elif process == "min":
                                                         min_value = np.min(process_array)
                                                         core_array[i, offset_start] = min_value
