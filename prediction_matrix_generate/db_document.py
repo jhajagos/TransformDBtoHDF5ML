@@ -976,7 +976,6 @@ def main_json(mapping_json_name, run_time_json_name):
         primary_mapping_json_name = mapping_json_name[0]
         additional_mappings = mapping_json_name[1:]
 
-
     with open(primary_mapping_json_name, "r") as f:
         mapping_configuration = json.load(f)
 
