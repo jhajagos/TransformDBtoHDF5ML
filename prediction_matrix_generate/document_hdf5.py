@@ -400,6 +400,7 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
             variable_dict = data_translate_dict
 
             core_array = np.zeros(shape=(data_items_count, 1))
+            core_array.fill(np.nan)
 
             column_annotations = np.zeros(shape=(4, 1), dtype="S128")
             offset_end = 1
@@ -489,6 +490,10 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
                     if "process" in variable_dict:
                         process = variable_dict["process"]
                         variable_name = variable_dict["name"]
+                        if process not in ("count", "count_categories"):
+                            core_array[:, offset_start:offset_end] = np.nan
+
+
                     else:
                         process = None
                         variable_name = None
