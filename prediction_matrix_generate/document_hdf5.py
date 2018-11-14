@@ -394,7 +394,7 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
         if template_type in ("variables", "categorical_list"):
             core_array = np.zeros(shape=(data_items_count, offset_end))
-            column_annotations = np.zeros(shape=(4, offset_end), dtype="S128")
+            column_annotations = np.zeros(shape=(4, offset_end), dtype="S512")
 
         if template_type in ("numeric_list"):
             variable_dict = data_translate_dict
@@ -402,7 +402,7 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
             core_array = np.zeros(shape=(data_items_count, 1))
             core_array.fill(np.nan)
 
-            column_annotations = np.zeros(shape=(4, 1), dtype="S128")
+            column_annotations = np.zeros(shape=(4, 1), dtype="S512")
             offset_end = 1
 
             print(variable_dict)
@@ -656,7 +656,7 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
             print("***************************")
 
-            column_data_set = hdf5p.create_dataset(hdf5_column_annotation_path, shape=(4, offset_end), dtype="S128")
+            column_data_set = hdf5p.create_dataset(hdf5_column_annotation_path, shape=(4, offset_end), dtype="S512")
             column_data_set[...] = column_annotations
 
 
