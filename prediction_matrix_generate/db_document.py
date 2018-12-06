@@ -1211,7 +1211,7 @@ def main(configuration):
 
         # Write dictionary out
         if results_dict_class is None:
-            output_file_name = os.path.join(data_directory, base_file_name + "_" + str(batch_id) + "_" + generate_date_stamp() + ".json")
+            output_file_name = os.path.join(data_directory, base_file_name + "_" + str(batch_id) + ".json")
 
             print('Writing JSON file "%s"' % output_file_name)
             with open(output_file_name, "w") as fw:
@@ -1230,7 +1230,7 @@ def main(configuration):
             output_file_names_list += [output_file_name]
 
             # Write out order of keys
-            output_key_order_file_name = os.path.join(data_directory, base_file_name + "_" + str(batch_id) + "_" + "key_order_" + generate_date_stamp() + ".json")
+            output_key_order_file_name = os.path.join(data_directory, base_file_name + "_" + str(batch_id) + "_" + "key_order" + ".json")
             output_key_order_file_list += [output_key_order_file_name]
             transactions_of_interest_str = [str(x) for x in  batch_transactions_ids]
             print("")
