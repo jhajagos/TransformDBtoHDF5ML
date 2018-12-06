@@ -22,25 +22,38 @@ def dictionary_transform_date(object_to_scan, object_class=None):
     else:
         new_object = {}
 
-    i = 0
-    for key in object_to_scan:
-        if value.__class__ == {}.__class__:
-            value = object_to_scan[key]
-            new_object[key] = dictionary_transform_date(value, {}.__class__)
-        elif value.__class__ == [].__class__:
+    if new_object == [].__class__:
+        for i in range(len(object_to_scan)):
             value = object_to_scan[i]
-            new_object[i] = dictionary_transform_date(value, [].__class__)
-        elif value.__class__ == u"".__class__:
-            if re_datetime.match(value):
-                new_object[key] = "T".join(value.split(" "))
+            if value.__class__ == {}.__class__:
+                new_object[i] = dictionary_transform_date(value, {}.__class__)
+            elif value.__class__ == [].__class__:
+                new_object[i] = dictionary_transform_date(value, [].__class__)
+            elif value.__class__ == u"".__class__:
+                if re_datetime.match(value):
+                    new_object[i] = "T".join(value.split(" "))
+                else:
+                    new_object[i] = value
+            elif value == "None":
+                pass
+            else:
+                new_object[i] = value
+    else:
+        for key in object_to_scan:
+            value = object_to_scan[key]
+            if value.__class__ == {}.__class__:
+                new_object[key] = dictionary_transform_date(value, {}.__class__)
+            elif value.__class__ == [].__class__:
+                new_object[key] = dictionary_transform_date(value, [].__class__)
+            elif value.__class__ == u"".__class__:
+                if re_datetime.match(value):
+                    new_object[key] = "T".join(value.split(" "))
+                else:
+                    new_object[key] = value
+            elif value == "None":
+                pass
             else:
                 new_object[key] = value
-        elif value == "None":
-            pass
-        else:
-            new_object[key] = value
-
-        i += 1
 
     return new_object
 
