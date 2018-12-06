@@ -74,11 +74,11 @@ def main(batch_file_name, elastic_search_host, index_name):
 
         for key in document_dict:
             document = document_dict[key]
-            cleaned_document = dictionary_transform_date(document)
+            #cleaned_document = dictionary_transform_date(document)
             try:
-                elastic_server.index(index=index_name, doc_type="mapped_document", body=cleaned_document)
+                elastic_server.index(index=index_name, doc_type="mapped_document", body=document)
             except:
-                print(cleaned_document)
+                print(document)
                 raise
 
             i += 1
