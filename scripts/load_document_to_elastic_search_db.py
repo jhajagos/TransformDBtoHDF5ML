@@ -16,7 +16,7 @@ def dictionary_transform_date(object_to_scan, object_class=None):
     re_datetime = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?$")
 
     if object_class == [].__class__:
-        new_object = []
+        new_object = len(object_to_scan) * [None]
     elif object_class == {}.__class__:
         new_object = {}
     else:
@@ -38,7 +38,7 @@ def dictionary_transform_date(object_to_scan, object_class=None):
                 pass
             else:
                 new_object[i] = value
-    else:
+    elif new_object == {}.__class__:
         for key in object_to_scan:
             value = object_to_scan[key]
             if value.__class__ == {}.__class__:
