@@ -15,7 +15,7 @@ except ImportError:
 
 
 
-def dictionary_transform_date(dict, object_class):
+def dictionary_transform_date(dict, object_class=None):
     re_datetime = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?$")
 
     if object_class == [].__class__:
