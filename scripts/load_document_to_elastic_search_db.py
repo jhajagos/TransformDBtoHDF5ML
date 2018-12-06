@@ -59,8 +59,6 @@ def main(batch_file_name, elastic_search_host, index_name):
     print("Loaded %s documents" % i)
 
 
-
-
 if __name__ == "__main__":
 
     arg_parse_obj = argparse.ArgumentParser(description="Load generated JSON files into an elastic search store")
