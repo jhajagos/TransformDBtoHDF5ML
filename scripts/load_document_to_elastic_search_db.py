@@ -3,7 +3,16 @@ import os
 import json
 import argparse
 import re
-from prediction_matrix_generate.utility_functions import data_dict_load
+import sys
+
+try:
+    from prediction_matrix_generate.utility_functions import data_dict_load
+except ImportError:
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.split(__file__)[0], os.path.pardir)))
+    from prediction_matrix_generate.utility_functions import data_dict_load
+
+
+
 
 
 def dictionary_transform_date(dict, object_class):
@@ -12,6 +21,8 @@ def dictionary_transform_date(dict, object_class):
     if object_class == [].__class__:
         new_object = []
     elif object_class == {}.__class__:
+        new_object = {}
+    else:
         new_object = {}
 
     for key in dict:
