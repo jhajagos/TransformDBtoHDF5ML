@@ -80,4 +80,4 @@ if __name__ == "__main__":
 
     arg_obj = arg_parse_obj.parse_args()
 
-    main(arg_obj.batch_file_nname, arg_obj.host_elastic_search, arg_obj.index_name)
+    main(arg_obj.batch_file_name, arg_obj.host_elastic_search, arg_obj.index_name)
