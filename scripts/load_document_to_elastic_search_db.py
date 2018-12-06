@@ -12,10 +12,7 @@ except ImportError:
     from prediction_matrix_generate.utility_functions import data_dict_load
 
 
-
-
-
-def dictionary_transform_date(dict, object_class=None):
+def dictionary_transform_date(object_to_scan, object_class=None):
     re_datetime = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?$")
 
     if object_class == [].__class__:
@@ -25,12 +22,14 @@ def dictionary_transform_date(dict, object_class=None):
     else:
         new_object = {}
 
-    for key in dict:
-        value = dict[key]
+    i = 0
+    for key in object_to_scan:
         if value.__class__ == {}.__class__:
+            value = object_to_scan[key]
             new_object[key] = dictionary_transform_date(value, {}.__class__)
         elif value.__class__ == [].__class__:
-            new_object[key] = dictionary_transform_date(value, [].__class__)
+            value = object_to_scan[i]
+            new_object[i] = dictionary_transform_date(value, [].__class__)
         elif value.__class__ == u"".__class__:
             if re_datetime.match(value):
                 new_object[key] = "T".join(value.split(" "))
@@ -40,6 +39,9 @@ def dictionary_transform_date(dict, object_class=None):
             pass
         else:
             new_object[key] = value
+
+        i += 1
+
     return new_object
 
 
