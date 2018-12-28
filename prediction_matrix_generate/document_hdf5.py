@@ -245,7 +245,10 @@ def build_translation_dict(data_dict, template_list_dict):
                         dict_of_interest = get_entry_from_path(datum_dict, path)
                         if dict_of_interest is not None:
                             if variable_dict["cell_value"] in dict_of_interest:
-                                value_of_interest = str(dict_of_interest[variable_dict["cell_value"]])
+                                try:
+                                    value_of_interest = str(dict_of_interest[variable_dict["cell_value"]])
+                                except UnicodeEncodeError:
+                                    value_of_interest = dict_of_interest[variable_dict["cell_value"]].encode('ascii', errors="replace")
                                 if value_of_interest in item_dict:
                                     item_dict[value_of_interest] += 1
                                 else:
@@ -338,7 +341,11 @@ def build_translation_dict(data_dict, template_list_dict):
                         for dict_of_interest in dicts_of_interest:
 
                             if template_dict["field"] in dict_of_interest:
-                                value_of_interest = str(dict_of_interest[template_dict["field"]])
+                                try:
+                                    value_of_interest = str(dict_of_interest[template_dict["field"]])
+                                except UnicodeDecodeError:
+                                    dict_of_interest[template_dict["field"]].encode('ascii', errors="replace")
+
                                 if value_of_interest in item_dict:
                                     item_dict[value_of_interest] += 1
                                 else:
@@ -479,7 +486,10 @@ def build_hdf5_matrix(hdf5p, data_dict, data_translate_dict_list, data_sort_key_
 
                         if dict_of_interest is not None:
                             if cell_value_field in dict_of_interest:
-                                field_value = str(dict_of_interest[cell_value_field])
+                                try:
+                                    field_value = str(dict_of_interest[cell_value_field])
+                                except UnicodeEncodeError:
+                                    field_value = dict_of_interest[cell_value_field].encode("ascii", errors="replace")
                                 field_value_position = position_map[field_value]
                                 core_array[i, offset_start + field_value_position] = 1
                         i += 1
